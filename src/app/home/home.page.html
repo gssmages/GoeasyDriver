@@ -10,35 +10,39 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class="welcome-card">
-      <ion-img src="/assets/shapes.svg"></ion-img>
-      <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
-      </ion-card-content>
+    <ion-row  > 
+        <ion-col size="12" text-center color="secondary" style="background: #2875a9;">
+            <div style="color: #fff;">Date : 30-Apr-2019</div> 
+        </ion-col>
+    </ion-row>
+        <ion-card>   
+            <ion-row style="background: #ffa3a3;"> 
+            <ion-col size="2"  style="background: #9d5b5b; color: #fff; text-align:center; "><ion-icon name="pin" style="font-size:32px;"></ion-icon></ion-col>
+            <ion-col size="10" style="line-height: 34px;font-weight: bold; padding-left: 10px; color: #555;">Drop - Perungalthur - D12 <span style="float: right;">2:00pm</span></ion-col>           
+          </ion-row>
+        </ion-card>
+        <ion-card>   
+          <ion-row style="background: #f3f3f3;"> 
+          <ion-col size="2"  style="background: #63a5d2; color: #fff; text-align:center; "><ion-icon name="pin" style="font-size:32px;"></ion-icon></ion-col>
+          <ion-col size="10" style="line-height: 34px;font-weight: bold; padding-left: 10px;  color: #555;">Drop - Pallikaranai - D22 <span style="float: right;">5:00pm</span></ion-col>           
+        </ion-row>
+      </ion-card>
+      <ion-card>   
+        <ion-row style="background: #bfd7ad;"> 
+        <ion-col size="2"  style="background: #849776; color: #fff; text-align:center; "><ion-icon name="pin" style="font-size:32px;"></ion-icon></ion-col>
+        <ion-col size="10" style="line-height: 34px;font-weight: bold; padding-left: 10px;  color: #555;">Pickup - Medavakkam - P09 <span style="float: right;">8:00pm</span></ion-col>           
+      </ion-row>
     </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>Resources</ion-label>
-      </ion-list-header>
-      <ion-item href="https://ionicframework.com/docs/">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>Ionic Documentation</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Scaffold Out Your App</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/layout/structure">
-        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-        <ion-label>Change Your App Layout</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/theming/basics">
-        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-        <ion-label>Theme Your App</ion-label>
-      </ion-item>
-    </ion-list>
+   <!--  <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="Home">
+          <ion-icon name="home"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>    
+        <ion-tab-button tab="speakers">
+          <ion-icon name="qr-scanner"></ion-icon>
+          <ion-label>Scan QR code</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs> -->
 </ion-content>

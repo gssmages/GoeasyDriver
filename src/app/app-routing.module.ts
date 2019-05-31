@@ -14,7 +14,9 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
-  }
+  },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'mytripsheet', loadChildren: './mytripsheet/mytripsheet.module#MytripsheetPageModule' }
 ];
 
 @NgModule({
@@ -22,5 +24,5 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
-})
+ })
 export class AppRoutingModule {}
