@@ -1,9 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>qrscan</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
+      <ion-title>
+        QR Scan Page
+      </ion-title>
+      <ion-buttons slot="end">
+          <ion-icon name="home" slot="icon-only" routerLink="/home"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+<ion-content [class.show-qr-scanner]="isOn" style="background: none transparent;" >
 
 </ion-content>
+<ion-footer>   
+    <ion-grid style="padding: 0;">
+        <ion-row style="padding: 0;">
+          
+            <ion-col style="padding: 0;">
+                <ion-button expand="full"  color="secondary" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px" (click)="stopQRscanning()" >Stop Scan</ion-button>
+            </ion-col> 
+            <ion-col style="padding: 0;">
+                <ion-button expand="full" color="primary" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px" (click)="getQRScan()">Start Scan</ion-button>
+            </ion-col>           
+        </ion-row>
+    </ion-grid>
+  </ion-footer>
