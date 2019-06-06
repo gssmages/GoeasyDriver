@@ -15,11 +15,16 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
-    {
+      {
+      title: 'My Trips Sheet',
+      url: '/mytripsheet',
+      icon: 'pin'
+    } 
+    /* {
       title: 'List',
       url: '/list',
       icon: 'list'
-    }
+    } */
   ];
 
   constructor(
