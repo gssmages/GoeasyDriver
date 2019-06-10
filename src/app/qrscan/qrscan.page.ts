@@ -8,11 +8,13 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 export class QrscanPage implements OnInit {
 
   isOn = false;
+  statuslight:any;
   scanSub:any;
   constructor( private qrScanner: QRScanner) { }
 
   ngOnInit() {
   }
+  
   async getQRScan() {
     this.qrScanner.prepare()
     .then((status: QRScannerStatus) => {
@@ -22,6 +24,7 @@ export class QrscanPage implements OnInit {
         
         // start scanning
         this.qrScanner.show();
+        
          this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
           console.log('Scanned something', text);
           alert(text)
@@ -50,6 +53,38 @@ export class QrscanPage implements OnInit {
     this.isOn = false;
     this.qrScanner.destroy();
     console.log('Scanned stopped');
+  }
+  Enablelight()
+  {
+    //this.qrScanner.getStatus().then((status: QRScannerStatus)=>{console.log(status.lightEnabled); 
+    //alert("this is starting on -- > "+status.lightEnabled) })
+   
+    if(this.isOn==true)
+    {
+   //   this.statuslight=this.qrScanner.getStatus()
+   //  alert("this is inside if-->"+this.statuslight.lightEnabled)
+   this.qrScanner.getStatus().then((status: QRScannerStatus)=>{
+     console.log(status.lightEnabled); 
+    //alert("this is starting on -- > "+status.lightEnabled)
+    if(status.lightEnabled==true)
+    {
+      this.qrScanner.disableLight();
+    }
+    else{
+      this.qrScanner.enableLight();
+    }
+    
+  })
+   
+     
+    }
+    //this.qrScanner.enableLight();
+    else
+    {
+      this.qrScanner.disableLight();
+      alert("Qr Scanner is not opened")
+    }
+    
   }
 
 }
