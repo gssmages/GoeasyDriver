@@ -8,6 +8,8 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 export class QrscanPage implements OnInit {
 
   isOn = false;
+  isgrid = false;
+  hidegrid=true;
   statuslight:any;
   scanSub:any;
   constructor( private qrScanner: QRScanner) { }
@@ -16,12 +18,15 @@ export class QrscanPage implements OnInit {
   }
   
   async getQRScan() {
-    this.qrScanner.prepare()
+    
+  
+ this.qrScanner.prepare()
     .then((status: QRScannerStatus) => {
       if (status.authorized) {
 
         this.isOn = true;
-        
+        this.isgrid= true;
+        this.hidegrid=false;
         // start scanning
         this.qrScanner.show();
         
@@ -29,6 +34,8 @@ export class QrscanPage implements OnInit {
           console.log('Scanned something', text);
           alert(text)
           this.isOn = false;
+          this.isgrid= false;
+          this.hidegrid=true;
           this.getQRScan();
          // this.qrScanner.hide();
           //this.scanSub.unsubscribe();
@@ -45,12 +52,14 @@ export class QrscanPage implements OnInit {
         // permission was denied, but not permanently. You can ask for permission again at a later time.
       }
     })
-    .catch((e: any) => console.log('Error is', e));
+    .catch((e: any) => console.log('Error is', e)); 
    
   } 
   stopQRscanning()  
   {
     this.isOn = false;
+    this.isgrid= false;
+    this.hidegrid=true;
     this.qrScanner.destroy();
     console.log('Scanned stopped');
   }

@@ -21,7 +21,9 @@
    <p><b>Start Scan -</b> To Start Qr scanner and Scan each employees  QR Code one by one and Accept Message will be displayed after every successfull scan. </p>
    <p><b>Stop Scan -</b> To Stop Qr scanner</p>
 </ion-card>
+
 </ion-content>
+<div [class.show-qrgrid]="isgrid" [class.hide-qrgrid]="hidegrid" style="width:100%; height:100%; position: absolute;"><img src="assets/Qrgrid.png" style="width:100%; height:100%;" ></div>
 <ion-footer>   
     <ion-grid style="padding: 0;">
         <ion-row style="padding: 0;">

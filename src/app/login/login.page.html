@@ -12,17 +12,22 @@
     <ion-card-title text-center style="font-size: 24px; font-weight: bold; color: #fff;">GoEasy Driver</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-   <ion-item style="--background: #183a51;color:#fff;--border-color: #183a51">
-  <!-- <ion-label position="stacked">Mobile Number</ion-label> -->
-  <ion-icon name="phone-portrait" style="color: #fff;"></ion-icon>
-  <ion-input  [(ngModel)]="username" placeholder=" Enter Mobile Number"></ion-input>
-</ion-item>
-<ion-item style="--background: #183a51;color: #fff; margin-top: 10px;--border-color: #183a51" >
-  <ion-icon name="phone-portrait"  style="color: #fff;"></ion-icon>
-  <ion-input  [(ngModel)]="password" placeholder=" Enter OTP"></ion-input>
-</ion-item>
-<ion-button expand="block" (click)="sendotp()" color="secondary" style="margin-top: 10px;">Send OTP</ion-button>
+    <div *ngIf="showmobilenumber">
+        <ion-item style="--background: #183a51;color:#fff;--border-color: #183a51">
+            <!-- <ion-label position="stacked">Mobile Number</ion-label> -->
+            <ion-icon name="phone-portrait" style="color: #fff;"></ion-icon>
+            <ion-input  [(ngModel)]="mobilenumber" placeholder="Enter 10-digit Mobile Number" type="number"  (keyup)="getvalidmobileno($event)" ></ion-input>
+          </ion-item>
+          <ion-button expand="block" (click)="sendotp()" color="secondary" style="margin-top: 10px;">Send OTP</ion-button>
+
+    </div>
+  <div *ngIf="showotpblock">
+     <ion-item style="--background: #183a51;color: #fff; margin-top: 10px;--border-color: #183a51" >
+        <ion-icon name="phone-portrait"  style="color: #fff;"></ion-icon>
+        <ion-input  [(ngModel)]="optnumber" placeholder="Enter OTP" type="number" (keyup)="getvalidOTP($event)" ></ion-input>
+      </ion-item>        
       <ion-button expand="block" (click)="login()" color="secondary" style="margin-top: 10px;">Login</ion-button>
+  </div>
   </ion-card-content>
 </ion-card>
 </ion-content>
