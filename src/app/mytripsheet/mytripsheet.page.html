@@ -6,57 +6,366 @@
     <ion-title>
       My Trip Sheet
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="exportPdf()">
+        <ion-icon slot="icon-only" name="print"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-row  > 
-        <ion-col size="5"color="secondary" style="background: #2875a9;">
-            <div style="color: #fff;"><label >From Date</label><br><input type="date" [value]="dbdate"  [(ngModel)]="fromdate" style="background: transparent;border: 0;font-size: 18px; width:100%"></div> 
-        </ion-col>
-        <ion-col size="5"color="secondary" style="background: #2875a9;">
-          <div style="color: #fff;" ><label >To Date</label><br><input type="date"  [value]="dbdate"  [(ngModel)]="todate"style="background: transparent;border: 0;font-size: 18px; width:100%"></div> 
-      </ion-col>
-      <ion-col size="2"color="secondary" style="background: #2875a9;">
-        <div text-center style="color: #fff; padding: 5px;">
-          <ion-icon name="search" style="font-size:32px;"></ion-icon>
-        </div> 
+  <ion-row>
+    <ion-col size="5" color="secondary" style="background: #2875a9;">
+      <div style="color: #fff;"><label>From Date</label><br><input type="date" [value]="dbdate" [(ngModel)]="fromdate"
+          style="background: transparent;border: 0;font-size: 18px; width:100%"></div>
     </ion-col>
+    <ion-col size="5" color="secondary" style="background: #2875a9;">
+      <div style="color: #fff;"><label>To Date</label><br><input type="date" [value]="dbdate" [(ngModel)]="todate"
+          style="background: transparent;border: 0;font-size: 18px; width:100%"></div>
+    </ion-col>
+    <ion-col size="2" color="secondary" style="background: #2875a9;">
+      <div text-center style="color: #fff; padding: 5px;">
+        <ion-icon name="search" style="font-size:32px;"></ion-icon>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-card>
+    <ion-row style="background: #f3f3f3;">
+      <ion-col size="4" style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
+        <div><label style="font-size:10px;color:#2875a9; ">Date</label><br><label>12-Apr-2019</label></div>
+        <div><label style="font-size:10px;color:#2875a9; ">Route No</label><br><label>Drop(D14)</label> </div>
+      </ion-col>
+      <ion-col size="6" style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
+        <div><label style="font-size:10px;color:#2875a9; ">Area</label><br><label>Perungalathur</label></div>
+      </ion-col>
+      <ion-col size="2" text-center style="padding: 2px;">
+        <div text-center><label style="font-size:10px;color:#2875a9; ">Count </label><br><label
+            style="font-size: 24px;">8</label></div>
+      </ion-col>
     </ion-row>
-        <ion-card>   
-            <ion-row style="background: #f3f3f3;"> 
-            <ion-col size="4"  style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
-              <div><label style="font-size:10px;color:#2875a9; ">Date</label><br><label>12-Apr-2019</label></div>
-              <div><label style="font-size:10px;color:#2875a9; ">Route No</label><br><label>Drop(D14)</label> </div> 
-            </ion-col>
-            <ion-col size="6"  style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;" >
-              <div><label style="font-size:10px;color:#2875a9; ">Area</label><br><label>Perungalathur</label></div>
-            </ion-col>  
-            <ion-col size="2" text-center style="padding: 2px;"><div text-center><label style="font-size:10px;color:#2875a9; ">Count </label><br><label style="font-size: 24px;">8</label></div></ion-col>            
-          </ion-row>
-        </ion-card>
-        <ion-card>   
-            <ion-row style="background: #f3f3f3;"> 
-            <ion-col size="4"  style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
-              <div><label style="font-size:10px;color:#2875a9; ">Date</label><br><label>12-Apr-2019</label></div>
-              <div><label style="font-size:10px;color:#2875a9; ">Route No</label><br><label>Drop(D14)</label> </div> 
-            </ion-col>
-            <ion-col size="6"  style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;" >
-              <div><label style="font-size:10px;color:#2875a9; ">Area</label><br><label>Perungalathur</label></div>
-            </ion-col>  
-            <ion-col size="2" text-center style="padding: 2px;"><div text-center><label style="font-size:10px;color:#2875a9; ">Count </label><br><label style="font-size: 24px;">8</label></div></ion-col>            
-          </ion-row>
-        </ion-card>
-        <ion-card>   
-            <ion-row style="background: #f3f3f3;"> 
-            <ion-col size="4"  style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
-              <div><label style="font-size:10px;color:#2875a9; ">Date</label><br><label>12-Apr-2019</label></div>
-              <div><label style="font-size:10px;color:#2875a9; ">Route No</label><br><label>Drop(D14)</label> </div> 
-            </ion-col>
-            <ion-col size="6"  style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;" >
-              <div><label style="font-size:10px;color:#2875a9; ">Area</label><br><label>Perungalathur</label></div>
-            </ion-col>  
-            <ion-col size="2" text-center style="padding: 2px;"><div text-center><label style="font-size:10px;color:#2875a9; ">Count </label><br><label style="font-size: 24px;">8</label></div></ion-col>            
-          </ion-row>
-        </ion-card>  
+  </ion-card>
+  <ion-card>
+    <ion-row style="background: #f3f3f3;">
+      <ion-col size="4" style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
+        <div><label style="font-size:10px;color:#2875a9; ">Date</label><br><label>12-Apr-2019</label></div>
+        <div><label style="font-size:10px;color:#2875a9; ">Route No</label><br><label>Drop(D14)</label> </div>
+      </ion-col>
+      <ion-col size="6" style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
+        <div><label style="font-size:10px;color:#2875a9; ">Area</label><br><label>Perungalathur</label></div>
+      </ion-col>
+      <ion-col size="2" text-center style="padding: 2px;">
+        <div text-center><label style="font-size:10px;color:#2875a9; ">Count </label><br><label
+            style="font-size: 24px;">8</label></div>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card>
+    <ion-row style="background: #f3f3f3;">
+      <ion-col size="4" style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
+        <div><label style="font-size:10px;color:#2875a9; ">Date</label><br><label>12-Apr-2019</label></div>
+        <div><label style="font-size:10px;color:#2875a9; ">Route No</label><br><label>Drop(D14)</label> </div>
+      </ion-col>
+      <ion-col size="6" style="background: url('assets/driverarrow.png') top right no-repeat; padding: 2px;">
+        <div><label style="font-size:10px;color:#2875a9; ">Area</label><br><label>Perungalathur</label></div>
+      </ion-col>
+      <ion-col size="2" text-center style="padding: 2px;">
+        <div text-center><label style="font-size:10px;color:#2875a9; ">Count </label><br><label
+            style="font-size: 24px;">8</label></div>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <div class="printable-content">
+    <div class="printable-area" id="printable-area" >
+      <table class="header-table">
+        <tr>
+          <td colspan="2" class="title">Goeasy Driver - My Trip Sheet</td>
+        </tr>
+        <tr>
+          <td><strong>From Date : </strong> 01-JUN-2019</td>
+          <td style="text-align: right;"><strong>To Date : </strong>31-JULY-2019</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding: 0;">
+            <table width="100%">
+              <tr>
+                <th>Date</th>
+                <th>Pickup/Drop</th>
+                <th>Area </th>
+                <th>Shifttime </th>
+                <th>Employee Count </th>
+              </tr>
+              <tr>
+                <td>01-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>02-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>03-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>04-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>05-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>06-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>07-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>08-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>09-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>10-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>11-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>12-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>13-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>14-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>15-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>16-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>17-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>18-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>19-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>20-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>21-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>22-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>23-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>24-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>25-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>26-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>27-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>28-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>29-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>30-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr> 
+              <tr>
+                <td>01-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>02-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>03-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>04-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>05-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>06-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>07-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>08-JUN-2019</td>
+                <td>Drop(D14)</td>
+                <td>Perungalathur</td>
+                <td>2:30 pm</td>
+                <td>10</td>
+              </tr>
+             
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </ion-content>
