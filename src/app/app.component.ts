@@ -19,6 +19,11 @@ export class AppComponent {
       title: 'My Trips Sheet',
       url: '/mytripsheet',
       icon: 'pin'
+    },
+    {
+      title: 'My Trip Summary',
+      url: '/mytripsummary',
+      icon: 'calendar'
     } 
     /* {
       title: 'List',

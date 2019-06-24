@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'mytripsheet', loadChildren: './mytripsheet/mytripsheet.module#MytripsheetPageModule' },
   { path: 'detail', loadChildren: './detail/detail.module#DetailPageModule' },
-  { path: 'qrscan', loadChildren: './qrscan/qrscan.module#QrscanPageModule' }
+  { path: 'qrscan', loadChildren: './qrscan/qrscan.module#QrscanPageModule' },
+  { path: 'mytripsummary', loadChildren: './mytripsummary/mytripsummary.module#MytripsummaryPageModule' }
 ];
 
 @NgModule({
