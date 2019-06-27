@@ -11,13 +11,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { File, IWriteOptions } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,

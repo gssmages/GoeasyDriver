@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
+
+import { RestApiService } from '../rest-api.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -22,9 +25,19 @@ export class LoginPage implements OnInit {
     public menu: MenuController,
     public alertController: AlertController,
     public loadingController: LoadingController,
+    private loginservice :RestApiService,
   ) { }
 
   ngOnInit() {
+    this.presentLoading();
+    this.loginservice.getLoginData("gssmages", "Hello123!").subscribe(res => { 
+      console.log("results are : " + JSON.stringify(res))
+
+    }, err => {            
+      console.log(err);
+      this.loading.dismiss();
+      this.presentAlert(err);           
+  });
   }
   ionViewWillEnter(){this.menu.enable(false);}
    ionViewDidLeave() {
@@ -69,15 +82,15 @@ export class LoginPage implements OnInit {
       value=value.length
       if(value!=10)
       {
-        this.presentAlert("please enter 10 digit Mobile Number")
+        this.presentAlert("Please enter 10 digit Mobile Number")
       }
       else
       {
+        localStorage.setItem("mobilenumber",this.mobilenumber);
         this.mobilenumber="";
-      this.showmobilenumber=false;
-      this.showotpblock=true;
-      this.presentAlert("You will get OTP on your registered mobile number !!");
-
+        this.showmobilenumber=false;
+        this.showotpblock=true;
+        this.presentAlert("You will get OTP on your registered mobile number !!");
       }
       
     }
@@ -85,6 +98,11 @@ export class LoginPage implements OnInit {
     {
       this.presentAlert("Please enter Mobile Number");
     }
+  }
+  resendOTP()
+  {
+    console.log(localStorage.getItem("mobilenumber"));
+    this.presentAlert("Your request is send. you will get OTP on your registered mobile number !!");
   }
   login()
   {

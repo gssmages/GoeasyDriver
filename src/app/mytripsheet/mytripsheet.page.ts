@@ -17,7 +17,7 @@ export class MytripsheetPage implements OnInit {
   today = new Date();
   maxdate = new Date();
   dbdate = '';
-  maxDate = this.maxdate.setMonth(this.maxdate.getMonth() + 2);
+  maxDate = this.maxdate.setMonth(this.maxdate.getMonth() - 2);
   loading: any;
   fromdate: any;
   todate: any;
@@ -27,9 +27,13 @@ export class MytripsheetPage implements OnInit {
 
   ngOnInit() {
 
-    this.dbdate = formatDate(this.today, 'yyyy-MM-dd', 'en-US', '+0530');
-    this.fromdate = this.dbdate;
-    this.todate = this.dbdate;
+    this.dbdate = formatDate(this.today, 'yyyy-MM-dd', 'en-US', '+0530');    
+   this.fromdate = this.dbdate;
+   this.todate = this.dbdate;
+  }
+  Search()
+  {
+      console.log( this.fromdate + "---" + this.todate)
   }
   exportPdf() {
     this.presentLoading('Creating PDF file...');

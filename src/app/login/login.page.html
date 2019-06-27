@@ -27,6 +27,7 @@
         <ion-input  [(ngModel)]="optnumber" placeholder="Enter OTP" type="number" (keyup)="getvalidOTP($event)" ></ion-input>
       </ion-item>        
       <ion-button expand="block" (click)="login()" color="secondary" style="margin-top: 10px;">Login</ion-button>
+      <p (click)="resendOTP()" style="text-decoration: underline;color: #fff; text-align: center;margin-top: 30px; cursor: pointer; ">Resend OTP</p>
   </div>
   </ion-card-content>
 </ion-card>
