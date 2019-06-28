@@ -3,17 +3,15 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 
+const LoginURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/RequestOTP?";
+const LoginValidURL="./assets/API/LoginValidation.json";
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
-const LoginURL="http://gssnte811.asia.ad.flextronics.com:4042/api/login/CheckLoginDetailEncryption?";
-
 
 export class RestApiService {
   dbdate='';
   today= new Date();
-
 
   constructor(private http: HttpClient) { }
 
@@ -33,11 +31,17 @@ export class RestApiService {
   }
 
   
-  getLoginData(username: string, password: string): Observable<any>{
+  getLoginOTPData(mobilenumber: string, resend: string): Observable<any>{
     let params = new HttpParams()
-     .set('username', username)
-     .set('password', password);
+     .set('MobileNumber', mobilenumber)
+     .set('Resend', resend);
   return this.http.get(LoginURL,{params}).pipe(catchError(this.handleError));
+  }
+  getLoginVerfiyData(mobilenumber: string, otp: string): Observable<any>{
+    let params = new HttpParams()
+     .set('MobileNumber', mobilenumber)
+     .set('OTP', otp);
+  return this.http.get(LoginValidURL,{params}).pipe(catchError(this.handleError));
   }
   
 }

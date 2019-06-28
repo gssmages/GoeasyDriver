@@ -17,15 +17,27 @@
 <ion-content>
   <ion-row>
       <ion-col size="5" color="secondary" style="background: #2875a9;">
-        <div style="color: #fff;"><label>From Date</label><br><input type="date" [value]="dbdate" [(ngModel)]="fromdate"
-            style="background: transparent;border: 0;font-size: 18px; width:100%"></div>
-      </ion-col>
-      <ion-col size="5" color="secondary" style="background: #2875a9;">
-        <div style="color: #fff;"><label>To Date</label><br><input type="date" [value]="dbdate" [(ngModel)]="todate"
-            style="background: transparent;border: 0;font-size: 18px; width:100%"></div>
-      </ion-col>
-      <ion-col size="2" color="secondary" style="background: #2875a9;">
-        <div text-center style="color: #fff; padding: 5px;">
+          <div >
+            <label style="color: #fff;">From Date</label>
+           <div style="border-radius: 4px; height: 30px; width:100%;background: #fff;position: relative;  padding: 3px 0;">
+            <ion-datetime display-format="DD-MMM-YYYY" picker-format="DD MMM YYYY"  [(ngModel)]="fromdate" [min]="" [max]="dbdate" style="--padding-bottom:5px;--padding-start:5px;--padding-top:5px;"> </ion-datetime>
+            <ion-icon name="calendar" style="font-size: 24px; position: absolute;right: 5px;top: 3px;"></ion-icon>
+          </div> 
+           <!--  <input type="date" [value]="dbdate"   [(ngModel)]="fromdate"
+              style="background: transparent;border: 0;font-size: 18px; width:100%"> --></div>
+        </ion-col>
+        <ion-col size="5" color="secondary" style="background: #2875a9;">
+          <div >
+            <label style="color: #fff;">To Date</label>
+            <div style="border-radius: 4px; height: 30px; width:100%;background: #fff;position: relative;  padding: 3px 0;">
+            <ion-datetime display-format="DD-MMM-YYYY" picker-format="DD MMM YYYY" [(ngModel)]="todate" [min]="fromdate" [max]="dbdate" style="--padding-bottom:5px;--padding-start:5px;--padding-top:5px;"></ion-datetime>
+            <ion-icon name="calendar" style="font-size: 24px; position: absolute;right: 5px;top: 3px;"></ion-icon>
+          </div> 
+           <!--  <input type="date" [value]="dbdate" [(ngModel)]="todate"
+              style="background: transparent;border: 0;font-size: 18px; width:100%"> --></div>
+        </ion-col>
+      <ion-col size="2" color="secondary" style="background: #2875a9;" (click)="Search()">
+        <div text-center style="padding: 5px; background: #56c9ff;border-radius: 4px; ">
           <ion-icon name="search" style="font-size:32px;"></ion-icon>
         </div>
       </ion-col>

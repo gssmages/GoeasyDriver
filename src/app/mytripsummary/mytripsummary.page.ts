@@ -29,6 +29,10 @@ export class MytripsummaryPage implements OnInit {
     this.fromdate = this.dbdate;
     this.todate = this.dbdate;
   }
+  Search()
+  {
+      console.log( formatDate(this.fromdate, 'yyyy-MM-dd', 'en-US', '+0530') + "---" + formatDate(this.todate, 'yyyy-MM-dd', 'en-US', '+0530'))
+  }
   exportPdf() {
     this.presentLoading('Creating PDF file...');
     const div = document.getElementById("printable-area");

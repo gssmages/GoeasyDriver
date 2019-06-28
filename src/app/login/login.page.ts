@@ -29,15 +29,7 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.presentLoading();
-    this.loginservice.getLoginData("gssmages", "Hello123!").subscribe(res => { 
-      console.log("results are : " + JSON.stringify(res))
-
-    }, err => {            
-      console.log(err);
-      this.loading.dismiss();
-      this.presentAlert(err);           
-  });
+   
   }
   ionViewWillEnter(){this.menu.enable(false);}
    ionViewDidLeave() {
@@ -86,11 +78,30 @@ export class LoginPage implements OnInit {
       }
       else
       {
-        localStorage.setItem("mobilenumber",this.mobilenumber);
-        this.mobilenumber="";
-        this.showmobilenumber=false;
-        this.showotpblock=true;
-        this.presentAlert("You will get OTP on your registered mobile number !!");
+        localStorage.setItem("mobilenumber",this.mobilenumber);      
+
+        this.presentLoading();
+        this.loginservice.getLoginOTPData(localStorage.getItem('mobilenumber'), '0').subscribe(res => { 
+          //console.log("results are : " + JSON.stringify(res))
+          if(res.results.ErrorCode=="0")
+          {
+           
+            this.mobilenumber="";
+            this.showmobilenumber=false;
+            this.showotpblock=true;
+            this.loading.dismiss();
+            this.presentAlert("You will get OTP on your registered mobile number !!");
+          }
+          else{
+            this.loading.dismiss();
+            this.presentAlert(res.results.ErrorDesc);
+          }
+          
+        }, err => {            
+          console.log(err);
+          this.loading.dismiss();
+          this.presentAlert(err);           
+      });        
       }
       
     }
@@ -101,8 +112,24 @@ export class LoginPage implements OnInit {
   }
   resendOTP()
   {
-    console.log(localStorage.getItem("mobilenumber"));
-    this.presentAlert("Your request is send. you will get OTP on your registered mobile number !!");
+    this.presentLoading();
+        this.loginservice.getLoginOTPData(localStorage.getItem('mobilenumber'), '1').subscribe(res => { 
+          //console.log("results are : " + JSON.stringify(res))
+          if(res.results.ErrorCode=="0")
+          {
+            this.loading.dismiss();
+            this.presentAlert("Your resend request is sent. you will get OTP on your registered mobile number !!");
+          }
+          else{
+            this.loading.dismiss();
+            this.presentAlert(res.results.ErrorDesc);
+          }
+          
+        }, err => {            
+          console.log(err);
+          this.loading.dismiss();
+          this.presentAlert(err);           
+      });   
   }
   login()
   {
@@ -116,10 +143,30 @@ export class LoginPage implements OnInit {
       }
       else
       {
-      this.optnumber="";
-      this.showmobilenumber=true;
-      this.showotpblock=false;
-      this.router.navigate(['/home']);
+      
+
+
+      this.presentLoading();
+      this.loginservice.getLoginVerfiyData(localStorage.getItem('mobilenumber'), this.optnumber).subscribe(res => { 
+        //console.log("results are : " + JSON.stringify(res))
+        if(res.results.ErrorCode=="0")
+        {
+          this.optnumber="";
+          this.showmobilenumber=true;
+          this.showotpblock=false;
+          this.router.navigate(['/home']);         
+          this.loading.dismiss();          
+        }
+        else{
+          this.loading.dismiss();
+          this.presentAlert(res.results.ErrorDesc);
+        }
+        
+      }, err => {            
+        console.log(err);
+        this.loading.dismiss();
+        this.presentAlert(err);           
+    }); 
       }
     }
     else

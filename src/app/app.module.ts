@@ -12,7 +12,6 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { File, IWriteOptions } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { HttpClientModule } from '@angular/common/http';
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -20,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     StatusBar,
@@ -28,7 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     QRScanner,
     File,
     FileOpener,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy,deps: [HttpClientModule] }
   ],
   bootstrap: [AppComponent]
 })

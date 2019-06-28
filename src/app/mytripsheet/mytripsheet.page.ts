@@ -33,7 +33,7 @@ export class MytripsheetPage implements OnInit {
   }
   Search()
   {
-      console.log( this.fromdate + "---" + this.todate)
+      console.log( formatDate(this.fromdate, 'yyyy-MM-dd', 'en-US', '+0530') + "---" + formatDate(this.todate, 'yyyy-MM-dd', 'en-US', '+0530'))
   }
   exportPdf() {
     this.presentLoading('Creating PDF file...');

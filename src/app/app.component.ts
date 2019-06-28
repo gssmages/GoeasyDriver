@@ -47,4 +47,8 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+  reset()
+  {
+   /*  localStorage.removeItem('empusername'); */
+  }
 }
