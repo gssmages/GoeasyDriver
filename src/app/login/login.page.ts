@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 
 import { RestApiService } from '../rest-api.service';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,11 @@ import { RestApiService } from '../rest-api.service';
 })
 export class LoginPage implements OnInit {
 
-  mobilenumber:any;
-  optnumber:any;
+  mobilenumber: any;
+  optnumber: any;
   private loading: any;
-  showmobilenumber:boolean=true;
-  showotpblock:boolean=false;
+  showmobilenumber: boolean = true;
+  showotpblock: boolean = false;
 
 
   constructor(
@@ -25,157 +26,147 @@ export class LoginPage implements OnInit {
     public menu: MenuController,
     public alertController: AlertController,
     public loadingController: LoadingController,
-    private loginservice :RestApiService,
+    private loginservice: RestApiService,
+    public globals: Globals
   ) { }
 
   ngOnInit() {
-   
+    if(localStorage.getItem('mobilenumber')!="" && localStorage.getItem('DriverInternalID')!="")
+    {
+      this.globals.displayname=localStorage.getItem('DriverName');
+      this.globals.mobilenumber=localStorage.getItem('mobilenumber')
+      this.router.navigate(['/home']);
+    }
+
   }
-  ionViewWillEnter(){this.menu.enable(false);}
-   ionViewDidLeave() {
+  ionViewWillEnter() { this.menu.enable(false); }
+  ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
   }
-  getvalidmobileno()
-  {
+  getvalidmobileno() {
     //console.log(this.moiblenumber)
-    if(this.mobilenumber)
-    {
-      let value=this.mobilenumber; 
-      value=value.toString();
-      if(value.length>10)
-      {
+    if (this.mobilenumber) {
+      let value = this.mobilenumber;
+      value = value.toString();
+      if (value.length > 10) {
         event.preventDefault()
-        this.mobilenumber = parseInt(value.substring(0,10));
+        this.mobilenumber = parseInt(value.substring(0, 10));
       }
-  }
-    
-  }
-  getvalidOTP()
-  {
-   // console.log(this.optnumber)
-   if(this.optnumber)
-   {
-    let value=this.optnumber;
-    value=value.toString();
-    if(value.length>4)
-    {
-      event.preventDefault()
-      this.optnumber = parseInt(value.substring(0,4));
     }
+
   }
-   
+  getvalidOTP() {
+    // console.log(this.optnumber)
+    if (this.optnumber) {
+      let value = this.optnumber;
+      value = value.toString();
+      if (value.length > 4) {
+        event.preventDefault()
+        this.optnumber = parseInt(value.substring(0, 4));
+      }
+    }
+
   }
-  sendotp()
-  {
-    if(this.mobilenumber)
-    {
-      let value=this.mobilenumber.toString();     
-      value=value.length
-      if(value!=10)
-      {
+  sendotp() {
+    if (this.mobilenumber) {
+      let value = this.mobilenumber.toString();
+      value = value.length
+      if (value != 10) {
         this.presentAlert("Please enter 10 digit Mobile Number")
       }
-      else
-      {
-        localStorage.setItem("mobilenumber",this.mobilenumber);      
+      else {
+        localStorage.setItem("mobilenumber", this.mobilenumber);
 
         this.presentLoading();
-        this.loginservice.getLoginOTPData(localStorage.getItem('mobilenumber'), '0').subscribe(res => { 
+        this.loginservice.getLoginOTPData(localStorage.getItem('mobilenumber'), '0').subscribe(res => {
           //console.log("results are : " + JSON.stringify(res))
-          if(res.results.ErrorCode=="0")
-          {
-           
-            this.mobilenumber="";
-            this.showmobilenumber=false;
-            this.showotpblock=true;
+          if (res.results.ErrorCode == "0") {
+
+            this.mobilenumber = "";
+            this.showmobilenumber = false;
+            this.showotpblock = true;
             this.loading.dismiss();
             this.presentAlert("You will get OTP on your registered mobile number !!");
           }
-          else{
+          else {
             this.loading.dismiss();
             this.presentAlert(res.results.ErrorDesc);
           }
-          
-        }, err => {            
+
+        }, err => {
           console.log(err);
           this.loading.dismiss();
-          this.presentAlert(err);           
-      });        
+          this.presentAlert(err);
+        });
       }
-      
+
     }
-    else
-    {
+    else {
       this.presentAlert("Please enter Mobile Number");
     }
   }
-  resendOTP()
-  {
+  resendOTP() {
     this.presentLoading();
-        this.loginservice.getLoginOTPData(localStorage.getItem('mobilenumber'), '1').subscribe(res => { 
+    this.loginservice.getLoginOTPData(localStorage.getItem('mobilenumber'), '1').subscribe(res => {
+      //console.log("results are : " + JSON.stringify(res))
+      if (res.results.ErrorCode == "0") {
+        this.loading.dismiss();
+        this.presentAlert("Your resend request is sent. you will get OTP on your registered mobile number !!");
+      }
+      else {
+        this.loading.dismiss();
+        this.presentAlert(res.results.ErrorDesc);
+      }
+
+    }, err => {
+      console.log(err);
+      this.loading.dismiss();
+      this.presentAlert(err);
+    });
+  }
+  login() {
+    if (this.optnumber) {
+      let value = this.optnumber.toString();
+      value = value.length
+      if (value != 4) {
+        this.presentAlert("Please enter 4-digit OTP")
+      }
+      else {        
+        this.presentLoading();
+        this.loginservice.getLoginVerfiyData(localStorage.getItem('mobilenumber'), this.optnumber).subscribe(res => {
           //console.log("results are : " + JSON.stringify(res))
-          if(res.results.ErrorCode=="0")
-          {
+          if (res.results.ErrorCode == "0") {
+            this.optnumber = "";
+            this.showmobilenumber = true;
+            this.showotpblock = false;
+            localStorage.setItem("RegularDriver", res.results.RegularDriver);
+            localStorage.setItem("DriverInternalID", res.results.DriverInternalID);
+            localStorage.setItem("DriverName", res.results.DriverName);
+            this.globals.displayname=localStorage.getItem('DriverName');
+            this.globals.mobilenumber=localStorage.getItem('mobilenumber')
+            this.router.navigate(['/home']);
             this.loading.dismiss();
-            this.presentAlert("Your resend request is sent. you will get OTP on your registered mobile number !!");
           }
-          else{
+          else {
+            this.optnumber = "";
             this.loading.dismiss();
             this.presentAlert(res.results.ErrorDesc);
           }
-          
-        }, err => {            
+
+        }, err => {
           console.log(err);
           this.loading.dismiss();
-          this.presentAlert(err);           
-      });   
-  }
-  login()
-  {
-    if(this.optnumber)
-    {
-      let value=this.optnumber.toString();     
-      value=value.length
-      if(value!=4)
-      {
-        this.presentAlert("Please enter 4-digit OTP")
-      }
-      else
-      {
-      
-
-
-      this.presentLoading();
-      this.loginservice.getLoginVerfiyData(localStorage.getItem('mobilenumber'), this.optnumber).subscribe(res => { 
-        //console.log("results are : " + JSON.stringify(res))
-        if(res.results.ErrorCode=="0")
-        {
-          this.optnumber="";
-          this.showmobilenumber=true;
-          this.showotpblock=false;
-          this.router.navigate(['/home']);         
-          this.loading.dismiss();          
-        }
-        else{
-          this.loading.dismiss();
-          this.presentAlert(res.results.ErrorDesc);
-        }
-        
-      }, err => {            
-        console.log(err);
-        this.loading.dismiss();
-        this.presentAlert(err);           
-    }); 
+          this.presentAlert(err);
+        });
       }
     }
-    else
-    {
+    else {
       this.presentAlert("Please enter OTP");
     }
-   
+
   }
-  async presentAlert(alertmessage:string) {
+  async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({
       header: 'GoEasy Alert',
       message: alertmessage,

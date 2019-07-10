@@ -1,0 +1,25 @@
+{
+    "results": [
+        {
+            "TripSheetID": "12312",
+            "EmployeeID": "941364",
+            "EmployeeName": "Magesh Babu S",
+            "CheckIn": true,
+            "CheckOut": false
+        },
+        {
+            "TripSheetID": "72464",
+            "EmployeeID": "935345",
+            "EmployeeName": "Samuveltamilselvan Devasagayam",
+            "CheckIn": false,
+            "CheckOut": false
+        },
+        {
+            "TripSheetID": "54534",
+            "EmployeeID": "3453452",
+            "EmployeeName": "Mohammed Mubarak Adham ",
+            "CheckIn": true,
+            "CheckOut": false
+        }
+    ]
+}

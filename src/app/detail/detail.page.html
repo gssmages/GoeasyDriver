@@ -10,37 +10,81 @@
 </ion-header>
 
 <ion-content>
-    <ion-row  >       
+  <ion-row>
+    <ion-col size="12" text-center color="secondary" style="background: #2875a9; ">
+      <div style="color: #fff;">{{requestfor}} ({{routenumber}}) - {{nodalpoint}}</div>
+    </ion-col>
+    <ion-col size="12" text-center color="secondary" style="background: #2875a9;border: 0;">
+      <div style="color: #fff;">Date : {{dbdate}} Shift Time : {{loginout}}</div>
+    </ion-col>
+  </ion-row>
+    <!-- <ion-row  >       
         <ion-col size="12"  text-center color="secondary" style="background: #2875a9; ">
           <div style="color: #fff;">Pickup (P12) - Perungalathur</div> 
       </ion-col>
       
   <ion-col size="12" text-center color="secondary" style="background: #2875a9;border: 0;">
-    <div style="color: #fff;">Date : 24-Jun-2019 Shift Time : 8.00am </div> 
+    <div style="color: #fff;">Date : 04-Jul-2019 Shift Time : 8.00am </div> 
 </ion-col>
-    </ion-row>
-        <ion-card>   
-            <ion-row style="background: #ffa3a3;"> 
-            <ion-col size="2"  style="background: #9d5b5b; color: #fff; text-align:center; "><ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon></ion-col>
-            <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;"><p  style="line-height:20px; margin:0;" >Magesh Babu S <br> 941364</p></ion-col>        
-            <ion-col size="3" style="font-weight: bold; padding-left: 10px; color: #555;"><ion-icon name="checkmark-circle" style="font-size:32px; color:#116534;"></ion-icon><ion-icon name="checkmark-circle" style="font-size:32px; color:#999"></ion-icon></ion-col>              
-          </ion-row>
-        </ion-card>
-        <ion-card>    
-          <ion-row style="background: #f3f3f3;"> 
-          <ion-col size="2"  style="background: #63a5d2; color: #fff; text-align:center; "><ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon></ion-col>
-          <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;"><p  style="line-height:20px; margin:0;" >Mohammed Mubarak <br> 941364</p></ion-col>        
-          <ion-col size="3" style="font-weight: bold; padding-left: 10px; color: #555;"><ion-icon name="checkmark-circle" style="font-size:32px;color:#116534;"></ion-icon><ion-icon name="checkmark-circle" style="font-size:32px;color:#999"></ion-icon></ion-col>              
-        </ion-row>
-      </ion-card>
-      <ion-card>    
-        <ion-row style="background: #f3f3f3;"> 
-        <ion-col size="2"  style="background: #63a5d2; color: #fff; text-align:center; "><ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon></ion-col>
-        <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;"><p  style="line-height:20px; margin:0;" >Julian Amaladoss<br> 941364</p></ion-col>        
-        <ion-col size="3" style="font-weight: bold; padding-left: 10px; color: #555;"><ion-icon name="checkmark-circle" style="font-size:32px;color:#116534;"></ion-icon><ion-icon name="checkmark-circle" style="font-size:32px;color:#999"></ion-icon></ion-col>              
+    </ion-row> -->
+    <ion-card *ngFor="let item of Tripdetaillist; let i = index">
+      <ion-row [ngStyle]="{'background':item.IsNewEmployee === false ? '#f3f3f3' : '#ffa3a3' }">
+        <ion-col size="2" style="color: #fff; text-align:center; " [ngStyle]="{'background':item.IsNewEmployee === false ? '#63a5d2' :'#9d5b5b'  }" >
+          <ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon>
+        </ion-col>
+        <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;">
+          <p style="line-height:20px; margin:0; font-size: 11px; overflow: hidden;white-space: nowrap;">{{item.EmployeeName}} </p>
+          <p style="line-height:20px; margin:0; font-size: 14px;"> {{item.EmployeeID}}</p>
+        </ion-col>
+        <ion-col size="3" style="font-weight: bold; padding-left: 10px; color: #555; text-align:right; ">
+          <ion-icon name="checkmark-circle" style="font-size:32px;"  [ngStyle]="{'color':item.CheckIn === true ? '#116534' : '#999' }"></ion-icon>
+          <ion-icon name="checkmark-circle" style="font-size:32px;" [ngStyle]="{'color':item.CheckOut === true ? '#116534' : '#999' }"></ion-icon>
+        </ion-col>
       </ion-row>
     </ion-card>
-   <!--  <ion-tabs>
+ <!--  <ion-card>
+    <ion-row style="background: #ffa3a3;">
+      <ion-col size="2" style="background: #9d5b5b; color: #fff; text-align:center; ">
+        <ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon>
+      </ion-col>
+      <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;">
+        <p style="line-height:20px; margin:0;">Magesh Babu S </p> <p style="line-height:20px; margin:0; font-size: 14px;"> 941364</p>
+      </ion-col>
+      <ion-col size="3" style="font-weight: bold; padding-left: 10px; color: #555;">
+        <ion-icon name="checkmark-circle" style="font-size:32px; color:#116534;"></ion-icon>
+        <ion-icon name="checkmark-circle" style="font-size:32px; color:#999"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card>
+    <ion-row style="background: #f3f3f3;">
+      <ion-col size="2" style="background: #63a5d2; color: #fff; text-align:center; ">
+        <ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon>
+      </ion-col>
+      <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;">
+        <p style="line-height:20px; margin:0;">Mohammed Mubarak</p><p style="line-height:20px; margin:0; font-size: 14px;"> 823423</p>
+      </ion-col>
+      <ion-col size="3" style="font-weight: bold; padding-left: 10px; color: #555;">
+        <ion-icon name="checkmark-circle" style="font-size:32px;color:#116534;"></ion-icon>
+        <ion-icon name="checkmark-circle" style="font-size:32px;color:#999"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card>
+    <ion-row style="background: #f3f3f3;">
+      <ion-col size="2" style="background: #63a5d2; color: #fff; text-align:center; ">
+        <ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon>
+      </ion-col>
+      <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;">
+        <p style="line-height:20px; margin:0;">Julian Amaladoss </p><p style="line-height:20px; margin:0; font-size: 14px;"> 951124</p>
+      </ion-col>
+      <ion-col size="3" style="font-weight: bold; padding-left: 10px; color: #555;">
+        <ion-icon name="checkmark-circle" style="font-size:32px;color:#116534;"></ion-icon>
+        <ion-icon name="checkmark-circle" style="font-size:32px;color:#999"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-card> -->
+  <!--  <ion-tabs>
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="Home">
           <ion-icon name="home"></ion-icon>
@@ -51,15 +95,14 @@
           <ion-label>Scan QR code</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
-    </ion-tabs> -->
+    </ion-tabs> *ngIf="tripcompleted=='false'"-->
 </ion-content>
-<ion-footer>   
+<ion-footer >
   <ion-grid style="padding: 0;">
-      <ion-row style="padding: 0;">
-          <ion-col style="padding: 0;">
-              <ion-button expand="full" color="primary" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px" routerLink="/qrscan">Scan QR Code</ion-button>
-          </ion-col>           
-      </ion-row>
+    <ion-row style="padding: 0;">
+      <ion-col style="padding: 0;">
+        <ion-button expand="full" color="primary" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px" routerLink="/qrscan">Scan QR Code</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-footer>
-

@@ -4,7 +4,13 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 import { catchError, tap, map } from 'rxjs/operators';
 
 const LoginURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/RequestOTP?";
-const LoginValidURL="./assets/API/LoginValidation.json";
+const LoginValidURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/ValidateOTP?";
+const HomeURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetHomepage?";
+const DetailpageURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetTripSheet?";
+//const DetailpageURL="./assets/API/TripDetails.json";
+//const LoginValidURL="./assets/API/LoginValidation.json";
+//const HomeURL="http://www.mocky.io/v2/5d173f3e2f0000672d25faaa";
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,5 +49,19 @@ export class RestApiService {
      .set('OTP', otp);
   return this.http.get(LoginValidURL,{params}).pipe(catchError(this.handleError));
   }
+  getTripList(mobilenumber: string, driverinternalID: string,regulardriver: string): Observable<any>{
+    let params = new HttpParams()
+     .set('MobileNumber', mobilenumber)
+     .set('DriverInternalID', driverinternalID)
+     .set('RegularDriver', regulardriver);
+  return this.http.get(HomeURL,{params}).pipe(catchError(this.handleError));
+  }
+
+  getTripDetail(routeid: string): Observable<any>{
+    let params = new HttpParams()
+      .set('RouteID', routeid);
+  return this.http.get(DetailpageURL,{params}).pipe(catchError(this.handleError));
+  }
+
   
 }

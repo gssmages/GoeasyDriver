@@ -1,0 +1,34 @@
+{
+    "results": {
+        "MobileNumber": "9442778471",
+        "RegularDriver": true,
+        "DriverInternalID": "223",
+        "ErrorCode": "0",
+        "ErrorDesc": "OTP Validated Successfully.",
+        "TripDate": "28-Jun-2019",
+        "list": [{
+                "RouteID":"213",
+                "RouteNumber":"P32",
+                "RequestFor":"Pickup",
+                "NodalPoint" : "Perungalathur",
+                "LogInOut":"8:00am",
+                "TripCompleted":true
+            },
+            {
+                "RouteID":"293",
+                "RouteNumber":"D12",
+                "RequestFor":"Drop",
+                "NodalPoint" : "Chrompet",
+                "LogInOut":"2:30pm",
+                "TripCompleted":false
+            },
+            {
+                "RouteID":"223",
+                "RouteNumber":"P02",
+                "RequestFor":"Pickup",
+                "NodalPoint" : "Perungalathur",
+                "LogInOut":"5:00pm",
+                "TripCompleted":false
+            }]
+        }
+}

@@ -1,0 +1,11 @@
+{
+    "results": {
+        "MobileNumber": "9442778471",
+        "DriverName": "Magesh Babu S",
+        "OTP": "472",        
+        "DriverInternalID": "223",
+        "RegularDriver": true,
+        "ErrorCode": "0",
+        "ErrorDesc": "OTP Validated Successfully."
+    }
+}
