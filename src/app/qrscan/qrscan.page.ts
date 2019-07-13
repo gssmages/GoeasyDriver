@@ -11,16 +11,16 @@ import { LoadingController } from '@ionic/angular';
 })
 export class QrscanPage implements OnInit {
 
-  loading:any;
+  loading: any;
   isOn = false;
   isgrid = false;
   hidegrid = true;
   statuslight: any;
   scanSub: any;
   startscan = false;
-  employeedetail:any;
-  employeeid:any="";
-  tripsheetid:any="";
+  employeedetail: any;
+  employeeid: any = "";
+  tripsheetid: any = "";
   constructor(
     private qrScanner: QRScanner,
     public globals: Globals,
@@ -29,13 +29,13 @@ export class QrscanPage implements OnInit {
 
   ngOnInit() {
     console.log(this.globals.Tripsheetdetail)
-    this.employeedetail=this.globals.Tripsheetdetail;
+    this.employeedetail = this.globals.Tripsheetdetail;
   }
 
   async getQRScan() {
-    this.employeeid="";
-    this.tripsheetid="";     
-   // this.verifyScannedData("941364")
+    this.employeeid = "";
+    this.tripsheetid = "";
+    // this.verifyScannedData("941364")
     //console.log("scanned data verify ---> "+this.startscan)
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
@@ -47,11 +47,11 @@ export class QrscanPage implements OnInit {
           this.qrScanner.show();
           this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
             console.log('Scanned something', text);
-           
+
             this.isOn = false;
             this.isgrid = false;
             this.hidegrid = true;
-            this.verifyScannedData(text)            
+            this.verifyScannedData(text)
             //this.getQRScan();
             // this.qrScanner.hide();
             //this.scanSub.unsubscribe();
@@ -75,41 +75,41 @@ export class QrscanPage implements OnInit {
     this.qrScanner.destroy();
     console.log('Scanned stopped');
   }
-  verifyScannedData(scandata:String)
-{
-  for (let item of this.employeedetail) {
-  //  console.log("Display inside forloop ==>" +item.EmployeeID);
-    if(scandata==item.EmployeeID)
-    {
-      if(item.CheckOut==false){
-        this.employeeid=item.EmployeeID;
-        this.tripsheetid=item.TripSheetID;        
+  verifyScannedData(scandata: String) {
+    if (scandata.length < 10) {
+      for (let item of this.employeedetail) {
+        //  console.log("Display inside forloop ==>" +item.EmployeeID);
+        if (scandata == item.EmployeeID) {
+          if (item.CheckOut == false) {
+            this.employeeid = item.EmployeeID;
+            this.tripsheetid = item.TripSheetID;
+          }
+          else {
+            console.log("Check Out Scan Done Already ")
+            alert("Check Out Scan Done Already ")
+          }
+          break;
+        }
       }
-      else
-      {
-        console.log("Check Out Scan Done Already ")
-        alert("Check Out Scan Done Already ")
+      if (this.employeeid != "") {
+        console.log("Succesfully Scanned " + this.employeeid + "--" + this.tripsheetid)
+        alert("Succesfully Scanned" + this.employeeid + "--" + this.tripsheetid)
+        this.getQRScan();
       }
-      break;     
+      else {
+        this.employeeid = scandata;
+        this.tripsheetid = "0";
+        console.log("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
+        alert("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
+      }
     }
-}
-  if(this.employeeid!="")
-  {
-    
-    console.log("Succesfully Scanned " + this.employeeid +"--"+ this.tripsheetid)
-    alert("Succesfully Scanned" + this.employeeid +"--"+ this.tripsheetid)
-    this.getQRScan();
+    else {
+      console.log("Invalid QR code " + scandata)
+      alert("Invalid QR code " + scandata)
+    }
+
   }
-  else
-  {
-    this.employeeid=scandata;
-    this.tripsheetid="0";
-    console.log("Item not in the List " + this.employeeid +"--"+ this.tripsheetid)
-    alert("Item not in the List " + this.employeeid +"--"+ this.tripsheetid)
-  }
-  
-} 
- Enablelight() {
+  Enablelight() {
     //this.qrScanner.getStatus().then((status: QRScannerStatus)=>{console.log(status.lightEnabled); 
     //alert("this is starting on -- > "+status.lightEnabled) })
 

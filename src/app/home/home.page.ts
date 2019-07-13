@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
-
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -14,8 +14,9 @@ export class HomePage {
 
   loading: any;
   listoftrips: any;
-  tripdate: any;
-
+  tripdate: any=formatDate(new Date(), 'dd-MMM-yyyy', 'en-US', '+0530');  ;
+  shownotrip=false;
+  showtrips=true;
   constructor(
     private router: Router,
     private platform: Platform,
@@ -28,12 +29,16 @@ export class HomePage {
     this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
 
       if (res.results != "") {
-        this.loading.dismiss();
+        setTimeout(() => {
+          this.loading.dismiss();
+      }, 1000);
+        
        // if (res.results.ErrorCode == "0") {
           console.log("results are : " + JSON.stringify(res.results.list))
           this.tripdate = res.results[0].TripDate;
           this.listoftrips = res.results;
-         
+          this.shownotrip=false;
+          this.showtrips=true;
        /*  }
         else {
        //   this.loading.dismiss();
@@ -41,8 +46,12 @@ export class HomePage {
         } */
       }
       else {
-        this.loading.dismiss();
-        this.presentAlert("No Record Found!!!");
+        this.shownotrip=true;
+        this.showtrips=false;
+        setTimeout(() => {
+          this.loading.dismiss();
+      }, 1000);
+        //this.presentAlert("No Record Found!!!");
       }
 
 

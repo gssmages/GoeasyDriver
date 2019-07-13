@@ -18,13 +18,20 @@
             <div style="color: #fff;">Date : {{tripdate}}</div> 
         </ion-col>
     </ion-row>
+    <div *ngIf="showtrips">
         <ion-card *ngFor="let item of listoftrips; let i = index" (click)="detailview(item)">   
             <ion-row [ngStyle]="{'background':item.TripCompleted === true ? '#ffa3a3' : '#f3f3f3' }"> <!-- style="background: #ffa3a3;"background: #9d5b5b; -->
             <ion-col size="2"   [ngStyle]="{'background':item.TripCompleted === true ? '#9d5b5b' : '#63a5d2' }" style=" color: #fff; text-align:center; "><ion-icon name="pin" style="font-size:32px;"></ion-icon></ion-col>
             <ion-col size="10" style="line-height: 34px;font-weight: bold; padding-left: 10px; color: #555;">{{item.RequestFor}} - {{item.NodalPoint}} - {{item.RouteNumber}}  <span style="float: right;"> {{item.LogInOut}}</span></ion-col>           
           </ion-row>
         </ion-card>
-       
+      </div>
+      <div *ngIf="shownotrip">
+       <ion-card  style="background: #005486; text-align: center; color: #fff;">
+        <img src="assets/navigator.png" style="width:100px;margin: auto; margin-top:30px;">
+        <h3>No Trip Today</h3>
+       </ion-card>
+      </div>
      <!--      <ion-card (click)="detailview()">   
             <ion-row style="background: #ffa3a3;">
               <ion-col size="2"  style=" background: #9d5b5b; color: #fff; text-align:center; "><ion-icon name="pin" style="font-size:32px;"></ion-icon></ion-col>

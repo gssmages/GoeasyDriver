@@ -61,6 +61,7 @@ export class LoginPage implements OnInit {
     if (this.optnumber) {
       let value = this.optnumber;
       value = value.toString();
+      console.log("value before checking -- > "+ value)
       if (value.length > 4) {
         event.preventDefault()
         this.optnumber = parseInt(value.substring(0, 4));
@@ -140,6 +141,7 @@ export class LoginPage implements OnInit {
             this.optnumber = "";
             this.showmobilenumber = true;
             this.showotpblock = false;
+            localStorage.setItem("LocationName", res.results.LocationName);
             localStorage.setItem("RegularDriver", res.results.RegularDriver);
             localStorage.setItem("DriverInternalID", res.results.DriverInternalID);
             localStorage.setItem("DriverName", res.results.DriverName);

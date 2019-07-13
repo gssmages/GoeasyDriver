@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
-
+import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import * as jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
@@ -16,11 +16,13 @@ export class MytripsummaryPage implements OnInit {
   today = new Date();
   maxdate = new Date();
   dbdate = '';
-  maxDate = this.maxdate.setMonth(this.maxdate.getMonth() + 2);
+  maxDate = this.maxdate.setMonth(this.maxdate.getMonth() - 2);
   loading: any;
   fromdate: any;
   todate: any;
-  constructor(public loadingController: LoadingController,
+  Dayscount:Number;
+ 
+  constructor(public loadingController: LoadingController,public alertController: AlertController,
     private file: File,
     private fileOpener: FileOpener) { }
 
@@ -32,6 +34,28 @@ export class MytripsummaryPage implements OnInit {
   Search()
   {
       console.log( formatDate(this.fromdate, 'yyyy-MM-dd', 'en-US', '+0530') + "---" + formatDate(this.todate, 'yyyy-MM-dd', 'en-US', '+0530'))
+
+      var fromdt=formatDate(this.fromdate, 'yyyy-MM-dd', 'en-US', '+0530');
+      var todt=formatDate(this.todate, 'yyyy-MM-dd', 'en-US', '+0530')
+      var fromdatearray=(fromdt).split('-');
+      var todatearray=(todt).split('-');
+      var date1=new Date(Number(fromdatearray[0]),Number(fromdatearray[1])-1,Number(fromdatearray[2]));
+      var date2=new Date(Number(todatearray[0]),Number(todatearray[1])-1,Number(todatearray[2]));
+      this.Dayscount=this.Numberofdays(date1,date2);
+      console.log("Days Count -- > "+ this.Dayscount)
+
+    if(this.Dayscount>30)
+    {
+      this.presentAlert("Please select maximum of 30 days")
+    }
+    else{
+      this.presentAlert("Your Search Result..")
+    }
+  }
+  Numberofdays(fromdate:Date,todate:Date)
+  {
+    var diff = Math.abs(fromdate.getTime() - todate.getTime());
+    return diff / (1000 * 60 * 60 * 24) + 1;
   }
   exportPdf() {
     this.presentLoading('Creating PDF file...');
@@ -95,7 +119,15 @@ export class MytripsummaryPage implements OnInit {
       });
 
   }
+  async presentAlert(alertmessage: string) {
+    const alert = await this.alertController.create({
+      header: 'GoEasy Alert',
+      message: alertmessage,
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
   async presentLoading(msg: string) {
     this.loading = await this.loadingController.create({
       message: msg
