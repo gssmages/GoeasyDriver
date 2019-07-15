@@ -7,6 +7,7 @@ const LoginURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileAp
 const LoginValidURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/ValidateOTP?";
 const HomeURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetHomepage?";
 const DetailpageURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetTripSheet?";
+const ScanURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/EmployeeCheckInCheckOut?";
 //const DetailpageURL="./assets/API/TripDetails.json";
 //const LoginValidURL="./assets/API/LoginValidation.json";
 //const HomeURL="http://www.mocky.io/v2/5d173f3e2f0000672d25faaa";
@@ -61,6 +62,16 @@ export class RestApiService {
     let params = new HttpParams()
       .set('RouteID', routeid);
   return this.http.get(DetailpageURL,{params}).pipe(catchError(this.handleError));
+  }
+  verifyQRScan(locationname: string, routeid: string,tripsheetid: string,employeeid: string,nodalpointid: string,routechange: string): Observable<any>{
+    let params = new HttpParams()
+     .set('LocationName', locationname)
+     .set('TripID', routeid)
+     .set('TripSheetID', tripsheetid)
+     .set('EmployeeID', employeeid)
+     .set('NodalPointID', nodalpointid)
+     .set('RouteChangeYesNo', routechange);
+  return this.http.get(ScanURL,{params}).pipe(catchError(this.handleError));
   }
 
   

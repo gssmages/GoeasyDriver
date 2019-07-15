@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { formatDate } from '@angular/common';
+import { Globals } from '../globals';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -23,16 +24,20 @@ export class HomePage {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private homeservice: RestApiService,
+    public globals: Globals
   ) { }
   ngOnInit() {
+    if(localStorage.getItem('mobilenumber')!="" && localStorage.getItem('DriverInternalID')!="")
+    {
+      this.globals.displayname=localStorage.getItem('DriverName');
+      this.globals.mobilenumber=localStorage.getItem('mobilenumber')
+    }
     this.presentLoading();
     this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
-
-      if (res.results != "") {
-        setTimeout(() => {
-          this.loading.dismiss();
-      }, 1000);
-        
+      setTimeout(() => {
+        this.loading.dismiss();
+    }, 1000);
+      if (res.results != "") {   
        // if (res.results.ErrorCode == "0") {
           console.log("results are : " + JSON.stringify(res.results.list))
           this.tripdate = res.results[0].TripDate;
@@ -47,10 +52,7 @@ export class HomePage {
       }
       else {
         this.shownotrip=true;
-        this.showtrips=false;
-        setTimeout(() => {
-          this.loading.dismiss();
-      }, 1000);
+        this.showtrips=false;   
         //this.presentAlert("No Record Found!!!");
       }
 

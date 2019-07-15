@@ -20,13 +20,13 @@ export class DetailPage implements OnInit {
   nodalpoint: any;
   loginout: any;
   tripcompleted: any;
-  tripdate:any;
+  tripdate: any;
   today = new Date();
   dbdate = '';
-  Tripdetaillist:any;
+  Tripdetaillist: any;
 
 
-  constructor(  public alertController: AlertController,
+  constructor(public alertController: AlertController,
     public loadingController: LoadingController,
     private tripdetailservice: RestApiService,
     private router: Router,
@@ -40,32 +40,37 @@ export class DetailPage implements OnInit {
     this.nodalpoint = localStorage.getItem("NodalPoint");
     this.loginout = localStorage.getItem("LogInOut");
     this.tripcompleted = localStorage.getItem("TripCompleted");
-
-     this.presentLoading();
-     this.tripdetailservice.getTripDetail(localStorage.getItem('RouteID')).subscribe(res => {
+  }
+  ionViewWillEnter() {
+    this.presentLoading();
+    this.tripdetailservice.getTripDetail(localStorage.getItem('RouteID')).subscribe(res => {
+      setTimeout(() => {
+        this.loading.dismiss();
+      }, 1000);
       if (res.results != "") {
-      //   if (res.results.ErrorCode == "0") {
-           console.log("results are : " + JSON.stringify(res.results))
-           this.Tripdetaillist = res.results;
-           this.globals.Tripsheetdetail=res.results;
-           this.loading.dismiss();   
+        //   if (res.results.ErrorCode == "0") {
+        console.log("results are : " + JSON.stringify(res.results))
+        this.Tripdetaillist = res.results;
+        this.globals.Tripsheetdetail = res.results;
+        //  this.loading.dismiss();   
       }
-      else{
+      else {
         this.presentAlert("No Record Found!!!");
-        this.loading.dismiss();  
-      }              
-     /*     }
-         else {
-           this.loading.dismiss();
-           this.presentAlert(res.results.ErrorDesc);
-         } */
-   
-       }, err => {
-         console.log(err);
-         this.loading.dismiss();
-         this.presentAlert(err);
-       });
-   
+        //  this.loading.dismiss();  
+      }
+      /*     }
+          else {
+            this.loading.dismiss();
+            this.presentAlert(res.results.ErrorDesc);
+          } */
+
+    }, err => {
+      console.log(err);
+      this.loading.dismiss();
+      this.presentAlert(err);
+    });
+
+
   }
   getTripDetail() {
     console.log("Trip Details are  -- > " + this.Tripdetaillist)

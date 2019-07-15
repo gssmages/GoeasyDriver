@@ -41,16 +41,20 @@ export class MytripsummaryPage implements OnInit {
       var todatearray=(todt).split('-');
       var date1=new Date(Number(fromdatearray[0]),Number(fromdatearray[1])-1,Number(fromdatearray[2]));
       var date2=new Date(Number(todatearray[0]),Number(todatearray[1])-1,Number(todatearray[2]));
-      this.Dayscount=this.Numberofdays(date1,date2);
-      console.log("Days Count -- > "+ this.Dayscount)
-
-    if(this.Dayscount>30)
-    {
-      this.presentAlert("Please select maximum of 30 days")
-    }
-    else{
-      this.presentAlert("Your Search Result..")
-    }
+      if (date1 <= date2) {
+        this.Dayscount = this.Numberofdays(date1, date2);
+        console.log("Days Count -- > " + this.Dayscount)
+  
+        if (this.Dayscount > 31) {
+          this.presentAlert("Please select maximum of 31 days")
+        }
+        else {
+          this.presentAlert("Your Search Result..")
+        }
+      }
+      else {
+        this.presentAlert("Please select fromdate less than todate")
+      }
   }
   Numberofdays(fromdate:Date,todate:Date)
   {

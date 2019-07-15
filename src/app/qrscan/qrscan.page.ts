@@ -3,7 +3,8 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Globals } from '../globals';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
-
+import { RestApiService } from '../rest-api.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-qrscan',
   templateUrl: './qrscan.page.html',
@@ -21,52 +22,58 @@ export class QrscanPage implements OnInit {
   employeedetail: any;
   employeeid: any = "";
   tripsheetid: any = "";
+  nodalpointid: any = "";
+  routechange: any = "";
+  checkoutscanned = false;
   constructor(
     private qrScanner: QRScanner,
     public globals: Globals,
     public alertController: AlertController,
-    public loadingController: LoadingController) { }
+    public loadingController: LoadingController,
+    private qrscanservice: RestApiService,
+    private router: Router) { }
 
   ngOnInit() {
     console.log(this.globals.Tripsheetdetail)
     this.employeedetail = this.globals.Tripsheetdetail;
+    console.log(this.employeedetail)
   }
 
   async getQRScan() {
     this.employeeid = "";
     this.tripsheetid = "";
-    // this.verifyScannedData("941364")
+    this.verifyScannedData("967572")
     //console.log("scanned data verify ---> "+this.startscan)
-    this.qrScanner.prepare()
-      .then((status: QRScannerStatus) => {
-        if (status.authorized) {
-          this.isOn = true;
-          this.isgrid = true;
-          this.hidegrid = false;
-          // start scanning
-          this.qrScanner.show();
-          this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
-            console.log('Scanned something', text);
-
-            this.isOn = false;
-            this.isgrid = false;
-            this.hidegrid = true;
-            this.verifyScannedData(text)
-            //this.getQRScan();
-            // this.qrScanner.hide();
-            //this.scanSub.unsubscribe();
-          });
-          //this.qrScanner.show();
-        } else if (status.denied) {
-          // camera permission was permanently denied
-          // you must use QRScanner.openSettings() method to guide the user to the settings page
-          // then they can grant the permission from there
-          this.qrScanner.openSettings();
-        } else {
-          // permission was denied, but not permanently. You can ask for permission again at a later time.
-        }
-      })
-      .catch((e: any) => console.log('Error is', e));
+    /*     this.qrScanner.prepare()
+          .then((status: QRScannerStatus) => {
+            if (status.authorized) {
+              this.isOn = true;
+              this.isgrid = true;
+              this.hidegrid = false;
+              // start scanning
+              this.qrScanner.show();
+              this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
+                console.log('Scanned something', text);
+    
+                this.isOn = false;
+                this.isgrid = false;
+                this.hidegrid = true;
+                this.verifyScannedData(text)
+                //this.getQRScan();
+                // this.qrScanner.hide();
+                //this.scanSub.unsubscribe();
+              });
+              //this.qrScanner.show();
+            } else if (status.denied) {
+              // camera permission was permanently denied
+              // you must use QRScanner.openSettings() method to guide the user to the settings page
+              // then they can grant the permission from there
+              this.qrScanner.openSettings();
+            } else {
+              // permission was denied, but not permanently. You can ask for permission again at a later time.
+            }
+          })
+          .catch((e: any) => console.log('Error is', e)); */
   }
   stopQRscanning() {
     this.isOn = false;
@@ -76,6 +83,10 @@ export class QrscanPage implements OnInit {
     console.log('Scanned stopped');
   }
   verifyScannedData(scandata: String) {
+    if(this.employeedetail!=undefined)
+    {
+
+    
     if (scandata.length < 10) {
       for (let item of this.employeedetail) {
         //  console.log("Display inside forloop ==>" +item.EmployeeID);
@@ -83,31 +94,58 @@ export class QrscanPage implements OnInit {
           if (item.CheckOut == false) {
             this.employeeid = item.EmployeeID;
             this.tripsheetid = item.TripSheetID;
+
           }
           else {
+            this.checkoutscanned = true;
             console.log("Check Out Scan Done Already ")
-            alert("Check Out Scan Done Already ")
+            this.presentAlert("Check Out Scan Done Already ");
           }
           break;
         }
       }
-      if (this.employeeid != "") {
-        console.log("Succesfully Scanned " + this.employeeid + "--" + this.tripsheetid)
-        alert("Succesfully Scanned" + this.employeeid + "--" + this.tripsheetid)
-        this.getQRScan();
-      }
-      else {
-        this.employeeid = scandata;
-        this.tripsheetid = "0";
-        console.log("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
-        alert("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
+      if (!this.checkoutscanned) {
+        if (this.employeeid == "") {
+          this.employeeid = scandata;
+          this.tripsheetid = "0";
+         // console.log("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
+        //  alert("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
+        }
+
+        this.presentLoading();
+        this.qrscanservice.verifyQRScan(
+          localStorage.getItem('LocationName'), localStorage.getItem('RouteID'), this.tripsheetid, this.employeeid,
+          this.nodalpointid, this.routechange).subscribe(res => {
+            console.log("results are : " + JSON.stringify(res.results))
+            this.loading.dismiss();
+
+            if (res.results.ErrorCode == "0") {
+              console.log("Succesfully Scanned " + this.employeeid + "--" + this.tripsheetid)
+              this.presentAlert("Succesfully Scanned - " +  this.employeeid )
+              //this.getQRScan();
+            }
+            else {
+              console.log("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
+              this.presentAlert("Item not in the List  ")
+            }
+          }, err => {
+            console.log(err);
+            this.loading.dismiss();
+            this.presentAlert(err);
+          });
       }
     }
     else {
       console.log("Invalid QR code " + scandata)
-      alert("Invalid QR code " + scandata)
+      this.presentAlert("Invalid QR code " + scandata)
     }
-
+  }
+  else
+  {
+    console.log("Employee List Not Available ")
+    this.router.navigate(['/home']);
+    
+  }
   }
   Enablelight() {
     //this.qrScanner.getStatus().then((status: QRScannerStatus)=>{console.log(status.lightEnabled); 
@@ -152,5 +190,4 @@ export class QrscanPage implements OnInit {
     });
     return await this.loading.present();
   }
-
 }
