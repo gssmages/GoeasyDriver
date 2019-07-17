@@ -233,7 +233,12 @@ export class QrscanPage implements OnInit {
 async presentModal() {
   const modal = await this.modalController.create({
     component: AreamodalComponent
-  });
+  }); 
+  modal.onDidDismiss()
+      .then((data) => {
+        console.log('MODAL DATA', data.data);
+    });
+
   return await modal.present();
 }
 reset()

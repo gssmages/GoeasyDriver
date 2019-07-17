@@ -14,6 +14,8 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { Globals } from './globals';
 import { AreamodalComponent } from './areamodal/areamodal.component';
+
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent,AreamodalComponent],
   entryComponents: [AreamodalComponent],
@@ -22,6 +24,7 @@ import { AreamodalComponent } from './areamodal/areamodal.component';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [
     StatusBar,

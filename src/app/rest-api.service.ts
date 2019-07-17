@@ -8,6 +8,7 @@ const LoginValidURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMob
 const HomeURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetHomepage?";
 const DetailpageURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetTripSheet?";
 const ScanURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/EmployeeCheckInCheckOut?";
+const AreaURL="http://gssnte811.asia.ad.flextronics.com:4042/api/AdhocCabRequestApi/ReadAdhocCabRequestValues/?locationID=1&employeeID=941364";
 //const DetailpageURL="./assets/API/TripDetails.json";
 //const LoginValidURL="./assets/API/LoginValidation.json";
 //const HomeURL="http://www.mocky.io/v2/5d173f3e2f0000672d25faaa";
@@ -72,6 +73,11 @@ export class RestApiService {
      .set('NodalPointID', nodalpointid)
      .set('RouteChangeYesNo', routechange);
   return this.http.get(ScanURL,{params}).pipe(catchError(this.handleError));
+  }
+  getArea(locationname: string): Observable<any>{
+    let params = new HttpParams()
+    .set('LocationName', locationname)
+  return this.http.get(AreaURL,{params}).pipe(catchError(this.handleError));
   }
 
   

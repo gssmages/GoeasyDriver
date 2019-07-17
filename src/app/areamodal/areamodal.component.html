@@ -8,3 +8,29 @@
 </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Area <span style="color:red">*</span></ion-label>
+    <ion-select placeholder="Select One" [(ngModel)]="area_relarea" (ionChange)="changeArea($event)">
+        <ion-select-option [value]="item" *ngFor="let item of areadetailslist">{{item.AreaName}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Boarding / Drop Point <span style="color:red">*</span></ion-label>
+    <ion-select placeholder="Select One" [(ngModel)]="boardingpoint" (ionChange)="getboardingname($event)" (click)="validatearea()">
+        <ion-select-option [value]="item" *ngFor="let item of boardinglisttemp">{{item.BoardingPointName}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>
+<ion-footer>   
+  <ion-grid style="padding: 0;">
+      <ion-row style="padding: 0;">
+          <ion-col style="padding: 0;">
+              <ion-button expand="full" color="primary" style="--margin-top:0;--margin-bottom:0;margin: 0;height: 48px" (click)="reset()">Reset</ion-button>
+          </ion-col>
+          <ion-col style="padding: 0;">
+              <ion-button expand="full" color="primary" style="--margin-top:0;--margin-bottom:0;margin: 0;height: 48px" (click)="submit()">Submit Request</ion-button>
+          </ion-col>   
+      </ion-row>
+  </ion-grid>  
+</ion-footer>
