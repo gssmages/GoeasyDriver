@@ -5,6 +5,8 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { AreamodalComponent } from '../areamodal/areamodal.component';
 @Component({
   selector: 'app-qrscan',
   templateUrl: './qrscan.page.html',
@@ -31,7 +33,8 @@ export class QrscanPage implements OnInit {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private qrscanservice: RestApiService,
-    private router: Router) { }
+    private router: Router,
+    public modalController: ModalController) { }
 
   ngOnInit() {
     console.log(this.globals.Tripsheetdetail)
@@ -42,7 +45,7 @@ export class QrscanPage implements OnInit {
   async getQRScan() {
     this.employeeid = "";
     this.tripsheetid = "";
-    this.verifyScannedData("967572")
+    this.verifyScannedData("885761")
     //console.log("scanned data verify ---> "+this.startscan)
     /*     this.qrScanner.prepare()
           .then((status: QRScannerStatus) => {
@@ -83,10 +86,9 @@ export class QrscanPage implements OnInit {
     console.log('Scanned stopped');
   }
   verifyScannedData(scandata: String) {
+   this.reset();
     if(this.employeedetail!=undefined)
-    {
-
-    
+    {    
     if (scandata.length < 10) {
       for (let item of this.employeedetail) {
         //  console.log("Display inside forloop ==>" +item.EmployeeID);
@@ -111,28 +113,8 @@ export class QrscanPage implements OnInit {
          // console.log("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
         //  alert("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
         }
-
-        this.presentLoading();
-        this.qrscanservice.verifyQRScan(
-          localStorage.getItem('LocationName'), localStorage.getItem('RouteID'), this.tripsheetid, this.employeeid,
-          this.nodalpointid, this.routechange).subscribe(res => {
-            console.log("results are : " + JSON.stringify(res.results))
-            this.loading.dismiss();
-
-            if (res.results.ErrorCode == "0") {
-              console.log("Succesfully Scanned " + this.employeeid + "--" + this.tripsheetid)
-              this.presentAlert("Succesfully Scanned - " +  this.employeeid )
-              //this.getQRScan();
-            }
-            else {
-              console.log("Item not in the List " + this.employeeid + "--" + this.tripsheetid)
-              this.presentAlert("Item not in the List  ")
-            }
-          }, err => {
-            console.log(err);
-            this.loading.dismiss();
-            this.presentAlert(err);
-          });
+        this.callverifyservice();
+      
       }
     }
     else {
@@ -146,6 +128,41 @@ export class QrscanPage implements OnInit {
     this.router.navigate(['/home']);
     
   }
+  }
+  callverifyservice()
+  {
+    this.presentLoading();
+    this.qrscanservice.verifyQRScan(
+      localStorage.getItem('LocationName'), localStorage.getItem('RouteID'), this.tripsheetid, this.employeeid,
+      this.nodalpointid, this.routechange).subscribe(res => {
+        console.log("results are : " + JSON.stringify(res.results))
+        this.loading.dismiss();
+
+        if (res.results.ErrorCode == "0") {
+          console.log("Succesfully Scanned " + this.employeeid + "--" + this.tripsheetid)
+          this.presentAlert(res.results.ErrorDesc)
+          //this.getQRScan();
+        }
+        else if(res.results.ErrorCode == "1"){
+          console.log(res.results.ErrorDesc)
+          this.Confirmroutechange(res.results.ErrorDesc)
+        }
+        else if(res.results.ErrorCode == "3"){
+          this.presentModal()
+          console.log("Employee ID not in this Roaster " + this.employeeid + "--" + this.tripsheetid)
+          this.presentAlert("Employee ID not in this Roaster")
+        }
+        else
+        {
+          console.log("Invalid Data. Please contact Transport Admin " + this.employeeid + "--" + this.tripsheetid)
+          this.presentAlert("Invalid Data. Please contact Transport Admin")
+        }
+      }, err => {
+        console.log(err);
+        this.loading.dismiss();
+        this.presentAlert(err);
+      });
+
   }
   Enablelight() {
     //this.qrScanner.getStatus().then((status: QRScannerStatus)=>{console.log(status.lightEnabled); 
@@ -190,4 +207,41 @@ export class QrscanPage implements OnInit {
     });
     return await this.loading.present();
   }
+  async Confirmroutechange(message: string) {
+  const confirm =  await this.alertController.create({
+    header: 'GoEasy Confirm Route Change',
+    message: message,
+    buttons: [
+      {
+        text: 'NO',
+        handler: () => {
+          console.log('No clicked');
+        }
+      },
+      {
+        text: 'YES',
+        handler: () => {
+          this.routechange="true";
+          console.log('yes clicked');
+          this.callverifyservice();
+        }
+      }
+    ]
+  });
+  await confirm.present();
+}
+async presentModal() {
+  const modal = await this.modalController.create({
+    component: AreamodalComponent
+  });
+  return await modal.present();
+}
+reset()
+{
+  this.employeeid = "";
+  this.tripsheetid= "";
+  this.nodalpointid= "";
+  this.routechange = "";
+  this.checkoutscanned = false;
+}
 }

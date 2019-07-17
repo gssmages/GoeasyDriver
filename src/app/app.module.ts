@@ -13,9 +13,10 @@ import { File, IWriteOptions } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { Globals } from './globals';
+import { AreamodalComponent } from './areamodal/areamodal.component';
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent,AreamodalComponent],
+  entryComponents: [AreamodalComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -28,7 +29,7 @@ import { Globals } from './globals';
     QRScanner,
     File,
     FileOpener,
-    Globals,
+    Globals,    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy,deps: [HttpClientModule] }
   ],
   bootstrap: [AppComponent]

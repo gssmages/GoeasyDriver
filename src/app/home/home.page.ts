@@ -37,33 +37,23 @@ export class HomePage {
       setTimeout(() => {
         this.loading.dismiss();
     }, 1000);
-      if (res.results != "") {   
-       // if (res.results.ErrorCode == "0") {
-          console.log("results are : " + JSON.stringify(res.results.list))
+      if (res.results != "") {       
+          console.log("results are : " + JSON.stringify(res.results))
           this.tripdate = res.results[0].TripDate;
           this.listoftrips = res.results;
           this.shownotrip=false;
-          this.showtrips=true;
-       /*  }
-        else {
-       //   this.loading.dismiss();
-          this.presentAlert(res.results.ErrorDesc);
-        } */
+          this.showtrips=true;     
       }
       else {
         this.shownotrip=true;
         this.showtrips=false;   
         //this.presentAlert("No Record Found!!!");
       }
-
-
     }, err => {
       console.log(err);
       this.loading.dismiss();
       this.presentAlert(err);
     });
-
-
     this.platform.backButton.subscribeWithPriority(9999, () => {
       document.addEventListener('backbutton', function (event) {
         event.preventDefault();

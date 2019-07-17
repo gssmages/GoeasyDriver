@@ -47,30 +47,19 @@ export class DetailPage implements OnInit {
       setTimeout(() => {
         this.loading.dismiss();
       }, 1000);
-      if (res.results != "") {
-        //   if (res.results.ErrorCode == "0") {
+      if (res.results != "") {        
         console.log("results are : " + JSON.stringify(res.results))
         this.Tripdetaillist = res.results;
-        this.globals.Tripsheetdetail = res.results;
-        //  this.loading.dismiss();   
+        this.globals.Tripsheetdetail = res.results;       
       }
       else {
-        this.presentAlert("No Record Found!!!");
-        //  this.loading.dismiss();  
-      }
-      /*     }
-          else {
-            this.loading.dismiss();
-            this.presentAlert(res.results.ErrorDesc);
-          } */
-
+        this.presentAlert("No Record Found!!!");        
+      }     
     }, err => {
       console.log(err);
       this.loading.dismiss();
       this.presentAlert(err);
     });
-
-
   }
   getTripDetail() {
     console.log("Trip Details are  -- > " + this.Tripdetaillist)
