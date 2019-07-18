@@ -31,7 +31,8 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(localStorage.getItem('mobilenumber')!="" && localStorage.getItem('DriverInternalID')!="")
+    console.log(localStorage.getItem('mobilenumber'))
+    if(localStorage.getItem('mobilenumber')!=null && localStorage.getItem('DriverInternalID')!=null)
     {
       this.globals.displayname=localStorage.getItem('DriverName');
       this.globals.mobilenumber=localStorage.getItem('mobilenumber')

@@ -51,7 +51,9 @@ export class HomePage {
       }
     }, err => {
       console.log(err);
-      this.loading.dismiss();
+      setTimeout(() => {
+        this.loading.dismiss();
+    }, 2000);
       this.presentAlert(err);
     });
     this.platform.backButton.subscribeWithPriority(9999, () => {

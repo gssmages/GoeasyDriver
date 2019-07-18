@@ -45,9 +45,9 @@ export class QrscanPage implements OnInit {
   async getQRScan() {
     this.employeeid = "";
     this.tripsheetid = "";
-    this.verifyScannedData("885761")
+   // this.verifyScannedData("887554")
     //console.log("scanned data verify ---> "+this.startscan)
-    /*     this.qrScanner.prepare()
+        this.qrScanner.prepare()
           .then((status: QRScannerStatus) => {
             if (status.authorized) {
               this.isOn = true;
@@ -76,7 +76,7 @@ export class QrscanPage implements OnInit {
               // permission was denied, but not permanently. You can ask for permission again at a later time.
             }
           })
-          .catch((e: any) => console.log('Error is', e)); */
+          .catch((e: any) => console.log('Error is', e));
   }
   stopQRscanning() {
     this.isOn = false;
@@ -87,6 +87,7 @@ export class QrscanPage implements OnInit {
   }
   verifyScannedData(scandata: String) {
    this.reset();
+   //alert(this.employeedetail)
     if(this.employeedetail!=undefined)
     {    
     if (scandata.length < 10) {
@@ -141,7 +142,7 @@ export class QrscanPage implements OnInit {
         if (res.results.ErrorCode == "0") {
           console.log("Succesfully Scanned " + this.employeeid + "--" + this.tripsheetid)
           this.presentAlert(res.results.ErrorDesc)
-          //this.getQRScan();
+          this.getQRScan();
         }
         else if(res.results.ErrorCode == "1"){
           console.log(res.results.ErrorDesc)
