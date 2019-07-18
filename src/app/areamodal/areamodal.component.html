@@ -11,14 +11,36 @@
 <ion-content>
   <ion-item>
     <ion-label position="stacked">Area <span style="color:red">*</span></ion-label>
-    <ion-select placeholder="Select One" [(ngModel)]="area_relarea" (ionChange)="changeArea($event)">
-        <ion-select-option [value]="item" *ngFor="let item of areadetailslist">{{item.AreaName}}</ion-select-option>
-    </ion-select>
-  </ion-item>
+    <ionic-selectable #areacomponent
+    item-content 
+    [(ngModel)]="area"
+    [items]="arealist"
+    itemValueField="AreaID"
+    itemTextField="AreaName"
+    [canSearch]="true"
+    (onChange)="Change($event)">
+    <ng-template ionicSelectableHeaderTemplate>
+      <ion-header>
+        <ion-toolbar color="primary">   
+        <ion-buttons slot="end" (click)="areacomponent.close()">
+          <ion-icon name="close" slot="icon-only" ></ion-icon>
+    </ion-buttons>
+        <ion-title>
+          {{areacomponent.label}}
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    </ng-template>
+  </ionic-selectable>
+</ion-item>
+ <!--    <ion-select placeholder="Select One" [(ngModel)]="area" (ionChange)="changeArea($event)">
+        <ion-select-option [value]="item" *ngFor="let item of arealist">{{item.AreaName}}</ion-select-option>
+    </ion-select> 
+  </ion-item>-->
   <ion-item>
     <ion-label position="stacked">Boarding / Drop Point <span style="color:red">*</span></ion-label>
     <ion-select placeholder="Select One" [(ngModel)]="boardingpoint" (ionChange)="getboardingname($event)" (click)="validatearea()">
-        <ion-select-option [value]="item" *ngFor="let item of boardinglisttemp">{{item.BoardingPointName}}</ion-select-option>
+        <ion-select-option [value]="item" *ngFor="let item of boardinglisttemp">{{item.NodalPointName}}</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-content>

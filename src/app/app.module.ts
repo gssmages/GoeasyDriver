@@ -16,6 +16,7 @@ import { Globals } from './globals';
 import { AreamodalComponent } from './areamodal/areamodal.component';
 
 import { FormsModule } from '@angular/forms';
+import { IonicSelectableModule } from 'ionic-selectable';
 @NgModule({
   declarations: [AppComponent,AreamodalComponent],
   entryComponents: [AreamodalComponent],
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    IonicSelectableModule
   ],
   providers: [
     StatusBar,

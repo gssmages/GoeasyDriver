@@ -237,6 +237,13 @@ async presentModal() {
   modal.onDidDismiss()
       .then((data) => {
         console.log('MODAL DATA', data.data);
+        if(data.data!="0")
+        {
+          this.nodalpointid=data.data;
+          console.log('MODAL DATA', data.data);
+          this.callverifyservice();
+        }
+        
     });
 
   return await modal.present();
