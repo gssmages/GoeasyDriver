@@ -162,7 +162,7 @@ export class QrscanPage implements OnInit {
         console.log(err);
         setTimeout(() => {
           this.loading.dismiss();
-      }, 2000);
+      }, 1500);
         this.presentAlert(err);
       });
 
