@@ -57,7 +57,9 @@ export class DetailPage implements OnInit {
       }     
     }, err => {
       console.log(err);
-      this.loading.dismiss();
+      setTimeout(() => {
+        this.loading.dismiss();
+    }, 2000);
       this.presentAlert(err);
     });
   }

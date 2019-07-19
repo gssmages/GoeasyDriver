@@ -98,7 +98,9 @@ export class LoginPage implements OnInit {
 
         }, err => {
           console.log(err);
-          this.loading.dismiss();
+          setTimeout(() => {
+            this.loading.dismiss();
+        }, 2000);
           this.presentAlert(err);
         });
       }
@@ -123,7 +125,9 @@ export class LoginPage implements OnInit {
 
     }, err => {
       console.log(err);
-      this.loading.dismiss();
+      setTimeout(() => {
+        this.loading.dismiss();
+    }, 2000);
       this.presentAlert(err);
     });
   }
@@ -159,8 +163,11 @@ export class LoginPage implements OnInit {
 
         }, err => {
           console.log(err);
-          this.loading.dismiss();
           this.presentAlert(err);
+          setTimeout(() => {
+            this.loading.dismiss();
+        }, 2000);
+          
         });
       }
     }
