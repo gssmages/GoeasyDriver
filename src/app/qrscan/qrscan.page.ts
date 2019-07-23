@@ -45,7 +45,7 @@ export class QrscanPage implements OnInit {
   async getQRScan() {
     this.employeeid = "";
     this.tripsheetid = "";
-   // this.verifyScannedData("887554")
+    //this.verifyScannedData("918851")
     //console.log("scanned data verify ---> "+this.startscan)
         this.qrScanner.prepare()
           .then((status: QRScannerStatus) => {
@@ -101,8 +101,8 @@ export class QrscanPage implements OnInit {
           }
           else {
             this.checkoutscanned = true;
-            console.log("Check Out Scan Done Already ")
-            this.presentAlert("Check Out Scan Done Already ");
+            console.log("Check Out Scan  Already Done")
+            this.presentAlert("Check Out Scan Already Done ");
           }
           break;
         }
@@ -141,17 +141,27 @@ export class QrscanPage implements OnInit {
 
         if (res.results.ErrorCode == "0") {
           console.log("Succesfully Scanned " + this.employeeid + "--" + this.tripsheetid)
-          this.presentAlert(res.results.ErrorDesc)
-          this.getQRScan();
+          this.presentAlert(res.results.ErrorDesc);
+          this.router.navigate(['/detail']);
+          //this.getQRScan();
         }
         else if(res.results.ErrorCode == "1"){
           console.log(res.results.ErrorDesc)
           this.Confirmroutechange(res.results.ErrorDesc)
         }
+        else if(res.results.ErrorCode == "2"){
+          
+          console.log("Employee check out already done" + this.employeeid + "--" + this.tripsheetid)
+          this.presentAlert(res.results.ErrorDesc)
+        }
         else if(res.results.ErrorCode == "3"){
           this.presentModal()
           console.log("Employee ID not in this Roaster " + this.employeeid + "--" + this.tripsheetid)
           this.presentAlert("Employee ID not in this Roaster")
+        }
+        else if(res.results.ErrorCode == "4"){
+          console.log("Employee check out scan will allow after 5 mins of check in scan  " + this.employeeid + "--" + this.tripsheetid)
+          this.presentAlert(res.results.ErrorDesc)
         }
         else
         {
