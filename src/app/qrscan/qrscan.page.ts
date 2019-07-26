@@ -6,6 +6,7 @@ import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { AreamodalComponent } from '../areamodal/areamodal.component';
 @Component({
   selector: 'app-qrscan',
@@ -34,12 +35,13 @@ export class QrscanPage implements OnInit {
     public loadingController: LoadingController,
     private qrscanservice: RestApiService,
     private router: Router,
-    public modalController: ModalController) { }
+    public modalController: ModalController,public toastController: ToastController) { }
 
   ngOnInit() {
     console.log(this.globals.Tripsheetdetail)
     this.employeedetail = this.globals.Tripsheetdetail;
     console.log(this.employeedetail)
+   // this.presentToast("test message")
   }
 
   async getQRScan() {
@@ -102,7 +104,9 @@ export class QrscanPage implements OnInit {
           else {
             this.checkoutscanned = true;
             console.log("Check Out Scan  Already Done")
-            this.presentAlert("Check Out Scan Already Done ");
+            this.presentToast("Check Out Scan Already Done ");
+            this.getQRScan();
+            //this.presentAlert("Check Out Scan Already Done ");
           }
           break;
         }
@@ -120,7 +124,9 @@ export class QrscanPage implements OnInit {
     }
     else {
       console.log("Invalid QR code " + scandata)
-      this.presentAlert("Invalid QR code " + scandata)
+      this.presentToast("Invalid QR code " + scandata)
+      this.getQRScan();
+      //this.presentAlert("Invalid QR code " + scandata)
     }
   }
   else
@@ -141,9 +147,17 @@ export class QrscanPage implements OnInit {
 
         if (res.results.ErrorCode == "0") {
           console.log("Succesfully Scanned " + this.employeeid + "--" + this.tripsheetid)
-          this.presentAlert(res.results.ErrorDesc);
-          this.router.navigate(['/detail']);
-          //this.getQRScan();
+          this.presentToast(res.results.ErrorDesc)
+          if(this.tripsheetid!="0")
+          {
+            this.getQRScan();
+          }
+          else
+          {
+            this.router.navigate(['/detail']);
+          }
+         // this.presentAlert(res.results.ErrorDesc);
+         // this.getQRScan();
         }
         else if(res.results.ErrorCode == "1"){
           console.log(res.results.ErrorDesc)
@@ -152,21 +166,24 @@ export class QrscanPage implements OnInit {
         else if(res.results.ErrorCode == "2"){
           
           console.log("Employee check out already done" + this.employeeid + "--" + this.tripsheetid)
-          this.presentAlert(res.results.ErrorDesc)
+          this.presentToast(res.results.ErrorDesc)
+          //this.presentAlert(res.results.ErrorDesc)
         }
         else if(res.results.ErrorCode == "3"){
           this.presentModal()
           console.log("Employee ID not in this Roaster " + this.employeeid + "--" + this.tripsheetid)
-          this.presentAlert("Employee ID not in this Roaster")
+         // this.presentAlert("Employee ID not in this Roaster")
         }
         else if(res.results.ErrorCode == "4"){
           console.log("Employee check out scan will allow after 5 mins of check in scan  " + this.employeeid + "--" + this.tripsheetid)
-          this.presentAlert(res.results.ErrorDesc)
+          this.presentToast(res.results.ErrorDesc)
+          //this.presentAlert(res.results.ErrorDesc)
         }
         else
         {
           console.log("Invalid Data. Please contact Transport Admin " + this.employeeid + "--" + this.tripsheetid)
-          this.presentAlert("Invalid Data. Please contact Transport Admin")
+          this.presentToast("Invalid Data. Please contact Transport Admin")
+         // this.presentAlert("Invalid Data. Please contact Transport Admin")
         }
       }, err => {
         console.log(err);
@@ -204,6 +221,15 @@ export class QrscanPage implements OnInit {
       alert("Qr Scanner is not opened")
     }
 
+  }
+  async presentToast(toastmessage: string) {
+    const toast = await this.toastController.create({
+      message: toastmessage,
+      duration:5000,
+      position:"middle",
+      cssClass:"messagealert"
+    });
+    toast.present();
   }
   async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({

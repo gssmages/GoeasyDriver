@@ -9,3 +9,13 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+
+ion-toast.messagealert 
+{
+    --background:linear-gradient(to right,  #3456b3 0%,#b126bc 100%); 
+    --color:#fff;
+    --border-style:solid;
+    font-size:16px;
+    text-align: center;
+}
