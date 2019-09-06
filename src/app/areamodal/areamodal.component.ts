@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { IonicSelectableComponent } from 'ionic-selectable';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 @Component({
   selector: 'app-areamodal',
   templateUrl: './areamodal.component.html',
@@ -22,9 +23,10 @@ export class AreamodalComponent implements OnInit {
   arealist:any;
   constructor(private modalController: ModalController,public alertController: AlertController,
     public loadingController: LoadingController,
-    private areaservice: RestApiService) { }
+    private areaservice: RestApiService, private ga: GoogleAnalytics) { }
 
   ngOnInit() {
+    this.ga.trackView('Area Modal Page').then(() => {}).catch(e => console.log(e));
     this.presentLoading();
     this.areaservice.getArea(localStorage.getItem('LocationName')).subscribe(res => {
         //console.log("results are : " + JSON.stringify(res.results))
