@@ -5,7 +5,7 @@ import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { Router } from '@angular/router';
 import { Globals } from '../globals';
-
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.page.html',
@@ -30,9 +30,10 @@ export class DetailPage implements OnInit {
     public loadingController: LoadingController,
     private tripdetailservice: RestApiService,
     private router: Router,
-    public globals: Globals) { }
+    public globals: Globals, private ga: GoogleAnalytics) { }
 
   ngOnInit() {
+    this.ga.trackView('TripSheet Page').then(() => {}).catch(e => console.log(e));
     this.dbdate = localStorage.getItem("TripDate");
     this.routeID = localStorage.getItem("RouteID");
     this.routenumber = localStorage.getItem("RouteNumber");

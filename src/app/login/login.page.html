@@ -24,7 +24,7 @@
   <div *ngIf="showotpblock">
      <ion-item style="--background: #183a51;color: #fff; margin-top: 10px;--border-color: #183a51" >
         <ion-icon name="phone-portrait"  style="color: #fff;"></ion-icon>
-        <ion-input  [(ngModel)]="optnumber" placeholder="Enter OTP" type="number" (keyup)="getvalidOTP($event)" ></ion-input>
+        <ion-input  [(ngModel)]="optnumber" placeholder="Enter OTP" type="text" (keyup)="getvalidOTP($event)" ></ion-input>
       </ion-item>        
       <ion-button expand="block" (click)="login()" color="secondary" style="margin-top: 10px;">Login</ion-button>
       <p (click)="resendOTP()" style="text-decoration: underline;color: #fff; text-align: center;margin-top: 30px; cursor: pointer; ">Resend OTP</p>
@@ -37,7 +37,7 @@
       <ion-grid style="padding: 0;">
           <ion-row style="padding: 0;">
               <ion-col   style="padding: 0;" text-center>
-                  Ver - 1.0.0
+                  Ver - {{globals.appversion}}
               </ion-col>
           </ion-row>
       </ion-grid>

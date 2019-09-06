@@ -5,5 +5,5 @@ export class Globals {
   Tripsheetdetail: any;
   displayname: string;
   mobilenumber: string;
-  
+  appversion: string;
 }

@@ -6,6 +6,7 @@ import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { formatDate } from '@angular/common';
 import { Globals } from '../globals';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -24,9 +25,11 @@ export class HomePage {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private homeservice: RestApiService,
-    public globals: Globals
+    public globals: Globals,
+    private ga: GoogleAnalytics
   ) { }
   ngOnInit() {
+    this.ga.trackView('Home Page').then(() => {}).catch(e => console.log(e));
     if(localStorage.getItem('mobilenumber')!="" && localStorage.getItem('DriverInternalID')!="")
     {
       this.globals.displayname=localStorage.getItem('DriverName');

@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'mytripsheet', loadChildren: './mytripsheet/mytripsheet.module#MytripsheetPageModule' },
   { path: 'detail', loadChildren: './detail/detail.module#DetailPageModule' },
   { path: 'qrscan', loadChildren: './qrscan/qrscan.module#QrscanPageModule' },
-  { path: 'mytripsummary', loadChildren: './mytripsummary/mytripsummary.module#MytripsummaryPageModule' }
+  { path: 'mytripsummary', loadChildren: './mytripsummary/mytripsummary.module#MytripsummaryPageModule' },
+  { path: 'update', loadChildren: './update/update.module#UpdatePageModule' }
 ];
 
 @NgModule({

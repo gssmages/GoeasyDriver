@@ -16,6 +16,20 @@
   <!-- add to homescreen for ios -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!--Google Analytics code-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-147208966-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push({'userId' : (localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))});}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-147208966-1', {
+  'user_id':(localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))
+});
+    //ga('set', 'userId', localStorage.getItem("displayname"));
+    gtag('set', {'user_id': (localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))}); // Set the user ID using signed-in user_id.
+    console.log(localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))
+  </script>
 </head>
 
 <body>

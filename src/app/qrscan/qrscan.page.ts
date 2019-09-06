@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AreamodalComponent } from '../areamodal/areamodal.component';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 @Component({
   selector: 'app-qrscan',
   templateUrl: './qrscan.page.html',
@@ -35,9 +36,10 @@ export class QrscanPage implements OnInit {
     public loadingController: LoadingController,
     private qrscanservice: RestApiService,
     private router: Router,
-    public modalController: ModalController,public toastController: ToastController) { }
+    public modalController: ModalController,public toastController: ToastController,private ga: GoogleAnalytics) { }
 
   ngOnInit() {
+    this.ga.trackView('QRScan Page').then(() => {}).catch(e => console.log(e));
     console.log(this.globals.Tripsheetdetail)
     this.employeedetail = this.globals.Tripsheetdetail;
     console.log(this.employeedetail)
@@ -47,7 +49,7 @@ export class QrscanPage implements OnInit {
   async getQRScan() {
     this.employeeid = "";
     this.tripsheetid = "";
-    //this.verifyScannedData("918851")
+    //this.verifyScannedData("923452")
     //console.log("scanned data verify ---> "+this.startscan)
         this.qrScanner.prepare()
           .then((status: QRScannerStatus) => {
@@ -167,6 +169,7 @@ export class QrscanPage implements OnInit {
           
           console.log("Employee check out already done" + this.employeeid + "--" + this.tripsheetid)
           this.presentToast(res.results.ErrorDesc)
+          this.getQRScan();
           //this.presentAlert(res.results.ErrorDesc)
         }
         else if(res.results.ErrorCode == "3"){
@@ -177,12 +180,14 @@ export class QrscanPage implements OnInit {
         else if(res.results.ErrorCode == "4"){
           console.log("Employee check out scan will allow after 5 mins of check in scan  " + this.employeeid + "--" + this.tripsheetid)
           this.presentToast(res.results.ErrorDesc)
+          this.getQRScan();
           //this.presentAlert(res.results.ErrorDesc)
         }
         else
         {
           console.log("Invalid Data. Please contact Transport Admin " + this.employeeid + "--" + this.tripsheetid)
           this.presentToast("Invalid Data. Please contact Transport Admin")
+          this.getQRScan();
          // this.presentAlert("Invalid Data. Please contact Transport Admin")
         }
       }, err => {

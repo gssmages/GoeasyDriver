@@ -6,7 +6,7 @@ import { LoadingController } from '@ionic/angular';
 
 import { RestApiService } from '../rest-api.service';
 import { Globals } from '../globals';
-
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -27,10 +27,12 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private loginservice: RestApiService,
-    public globals: Globals
+    public globals: Globals,
+    private ga: GoogleAnalytics
   ) { }
 
   ngOnInit() {
+    this.ga.trackView('Login Page').then(() => {}).catch(e => console.log(e));
     console.log(localStorage.getItem('mobilenumber'))
     if(localStorage.getItem('mobilenumber')!=null && localStorage.getItem('DriverInternalID')!=null)
     {
@@ -58,14 +60,13 @@ export class LoginPage implements OnInit {
 
   }
   getvalidOTP() {
-    // console.log(this.optnumber)
-    if (this.optnumber) {
-      let value = this.optnumber;
-      value = value.toString();
+     console.log(this.optnumber)
+    if (this.optnumber.toString()) {
+      let value = this.optnumber.toString();
       console.log("value before checking -- > "+ value)
       if (value.length > 4) {
         event.preventDefault()
-        this.optnumber = parseInt(value.substring(0, 4));
+        this.optnumber = value.substring(0, 4);
       }
     }
 
@@ -133,7 +134,9 @@ export class LoginPage implements OnInit {
   }
   login() {
     if (this.optnumber) {
-      let value = this.optnumber.toString();
+      console.log(this.optnumber.toString())
+      let value = this.optnumber.toString();    
+      console.log(value)
       value = value.length
       if (value != 4) {
         this.presentAlert("Please enter 4-digit OTP")

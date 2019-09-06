@@ -86,22 +86,37 @@ export class AreamodalComponent implements OnInit {
   }
   validatearea()
   {
-    console.log(this.areaname)
-    if(this.areaid=="")
+    this.boardinglisttemp=[];
+    console.log(this.areaname +"-------" +this.area)
+    if(this.area==''|| this.area==undefined)
     {
-      console.log(this.areaid)
-      this.boardinglisttemp=[];
+     this.reset();
+      console.log(this.boardinglisttemp)
     }
   }
   submit()
   {
+    console.log("boardingpointID --> "+ this.boardingpointID)
     console.log("Area Name --> " + this.areaname + "----------"+"Boardingpoint Name --> " + this.boardingpointname)
-    if(this.boardingpointID!="")
-    this.modalController.dismiss(this.boardingpointID);
+    if(this.boardingpointID!="" && this.boardingpointID!=undefined && this.area!='' && this.area!=undefined)
+    {
+      this.modalController.dismiss(this.boardingpointID);
+      console.log("submit request")
+    }
     else
     {
       this.presentAlert("Please select Area and Boarding Point")
     }
+  }
+  reset()
+  {
+   this.area="";
+    this.areaid=""
+    this.areaname="";
+    this.boardingpoint="";
+    this.boardingpointID="";
+    this.boardingpointname="";
+    this.boardinglisttemp=[];
   }
   async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({
