@@ -57,7 +57,7 @@ export class AppComponent {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
       this.checkCodePush(); //Use the plugin always after platform.ready()
-      this.ga.startTrackerWithId('UA-147208966-1') //UA-51333248-11 is bala google id //UA-63736036-2 is magesh google id 
+      this.ga.startTrackerWithId('UA-147208966-2') //UA-51333248-11 is bala google id //UA-63736036-2 is magesh google id 
       .then(() => {}).catch(e => alert('Error starting GoogleAnalytics == '+ e));
     });
   }

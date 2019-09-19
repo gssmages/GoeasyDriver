@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
+  <meta name="robots" content="noindex"/>
   <title>Goeasy Driver App</title>
 
   <base href="/" />
@@ -17,13 +18,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <!--Google Analytics code-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-147208966-1"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-147208966-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push({'userId' : (localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))});}
     gtag('js', new Date());
 
-    gtag('config', 'UA-147208966-1', {
+    gtag('config', 'UA-147208966-2', {
   'user_id':(localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))
 });
     //ga('set', 'userId', localStorage.getItem("displayname"));

@@ -32,10 +32,11 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.ga.trackView('Login Page').then(() => {}).catch(e => console.log(e));
+    this.ga.trackView('Login Page').then(() => {}).catch(e => console.log(e));    
     console.log(localStorage.getItem('mobilenumber'))
     if(localStorage.getItem('mobilenumber')!=null && localStorage.getItem('DriverInternalID')!=null)
     {
+      this.ga.setUserId(localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))
       this.globals.displayname=localStorage.getItem('DriverName');
       this.globals.mobilenumber=localStorage.getItem('mobilenumber')
       this.router.navigate(['/home']);
@@ -153,6 +154,7 @@ export class LoginPage implements OnInit {
             localStorage.setItem("RegularDriver", res.results.RegularDriver);
             localStorage.setItem("DriverInternalID", res.results.DriverInternalID);
             localStorage.setItem("DriverName", res.results.DriverName);
+            this.ga.setUserId(localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))
             this.globals.displayname=localStorage.getItem('DriverName');
             this.globals.mobilenumber=localStorage.getItem('mobilenumber')
             this.router.navigate(['/home']);
