@@ -95,9 +95,9 @@
           <ion-label>Scan QR code</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
-    </ion-tabs> *ngIf="tripcompleted=='false'"-->
+    </ion-tabs> -->
 </ion-content>
-<ion-footer >
+<ion-footer *ngIf="tripcompleted=='false'" >
   <ion-grid style="padding: 0;">
     <ion-row style="padding: 0;">
       <ion-col style="padding: 0;">

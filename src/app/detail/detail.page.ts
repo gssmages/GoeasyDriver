@@ -49,7 +49,7 @@ export class DetailPage implements OnInit {
         this.loading.dismiss();
       }, 1000);
       if (res.results != "") {        
-        console.log("results are : " + JSON.stringify(res.results))
+       // console.log("results are : " + JSON.stringify(res.results))
         this.Tripdetaillist = res.results;
         this.globals.Tripsheetdetail = res.results;       
       }

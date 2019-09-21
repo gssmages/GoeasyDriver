@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
 
   }
   getvalidOTP() {
-     console.log(this.optnumber)
+    // console.log(this.optnumber)
     if (this.optnumber.toString()) {
       let value = this.optnumber.toString();
       console.log("value before checking -- > "+ value)

@@ -40,18 +40,18 @@ export class QrscanPage implements OnInit {
 
   ngOnInit() {
     this.ga.trackView('QRScan Page').then(() => {}).catch(e => console.log(e));
-    console.log(this.globals.Tripsheetdetail)
+    //console.log(this.globals.Tripsheetdetail)
     this.employeedetail = this.globals.Tripsheetdetail;
-    console.log(this.employeedetail)
+   // console.log(this.employeedetail)
    // this.presentToast("test message")
   }
 
   async getQRScan() {
     this.employeeid = "";
     this.tripsheetid = "";
-    //this.verifyScannedData("923452")
+    this.verifyScannedData("599918")
     //console.log("scanned data verify ---> "+this.startscan)
-        this.qrScanner.prepare()
+   /*  this.qrScanner.prepare()
           .then((status: QRScannerStatus) => {
             if (status.authorized) {
               this.isOn = true;
@@ -80,7 +80,7 @@ export class QrscanPage implements OnInit {
               // permission was denied, but not permanently. You can ask for permission again at a later time.
             }
           })
-          .catch((e: any) => console.log('Error is', e));
+          .catch((e: any) => console.log('Error is', e));   */
   }
   stopQRscanning() {
     this.isOn = false;
@@ -91,7 +91,7 @@ export class QrscanPage implements OnInit {
   }
   verifyScannedData(scandata: String) {
    this.reset();
-   //alert(this.employeedetail)
+  // alert(this.employeedetail)
     if(this.employeedetail!=undefined)
     {    
     if (scandata.length < 10) {
@@ -152,7 +152,7 @@ export class QrscanPage implements OnInit {
           this.presentToast(res.results.ErrorDesc)
           if(this.tripsheetid!="0")
           {
-            this.getQRScan();
+           this.getQRScan();
           }
           else
           {
@@ -165,9 +165,8 @@ export class QrscanPage implements OnInit {
           console.log(res.results.ErrorDesc)
           this.Confirmroutechange(res.results.ErrorDesc)
         }
-        else if(res.results.ErrorCode == "2"){
-          
-          console.log("Employee check out already done" + this.employeeid + "--" + this.tripsheetid)
+        else if(res.results.ErrorCode == "2"){          
+         console.log("Employee check out already done" + this.employeeid + "--" + this.tripsheetid)
           this.presentToast(res.results.ErrorDesc)
           this.getQRScan();
           //this.presentAlert(res.results.ErrorDesc)
@@ -177,7 +176,7 @@ export class QrscanPage implements OnInit {
           console.log("Employee ID not in this Roaster " + this.employeeid + "--" + this.tripsheetid)
          // this.presentAlert("Employee ID not in this Roaster")
         }
-        else if(res.results.ErrorCode == "4"){
+        else if(res.results.ErrorCode == "5"){
           console.log("Employee check out scan will allow after 5 mins of check in scan  " + this.employeeid + "--" + this.tripsheetid)
           this.presentToast(res.results.ErrorDesc)
           this.getQRScan();
@@ -186,7 +185,7 @@ export class QrscanPage implements OnInit {
         else
         {
           console.log("Invalid Data. Please contact Transport Admin " + this.employeeid + "--" + this.tripsheetid)
-          this.presentToast("Invalid Data. Please contact Transport Admin")
+          this.presentToast(res.results.ErrorDesc)
           this.getQRScan();
          // this.presentAlert("Invalid Data. Please contact Transport Admin")
         }

@@ -35,6 +35,43 @@ export class HomePage {
       this.globals.displayname=localStorage.getItem('DriverName');
       this.globals.mobilenumber=localStorage.getItem('mobilenumber')
     }
+    this.platform.backButton.subscribeWithPriority(9999, () => {
+      document.addEventListener('backbutton', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        console.log('back button disabled');
+      }, false);
+    });
+
+  }
+  doRefresh(event) {
+    this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
+      setTimeout(() => {     
+        event.target.complete();
+      }, 2000);
+      if (res.results != "") {       
+          console.log("results are : " + JSON.stringify(res.results))
+          this.tripdate = res.results[0].TripDate;
+          this.listoftrips = res.results;
+          this.shownotrip=false;
+          this.showtrips=true;     
+      }
+      else {
+        this.shownotrip=true;
+        this.showtrips=false;   
+        //this.presentAlert("No Record Found!!!");
+      }
+    }, err => {
+      setTimeout(() => {     
+        event.target.complete();
+      }, 2000);
+      console.log(err);    
+      this.presentAlert(err);
+    });
+
+   
+  }
+  ionViewWillEnter() {
     this.presentLoading();
     this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
       setTimeout(() => {
@@ -59,14 +96,7 @@ export class HomePage {
     }, 2000);
       this.presentAlert(err);
     });
-    this.platform.backButton.subscribeWithPriority(9999, () => {
-      document.addEventListener('backbutton', function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        console.log('back button disabled');
-      }, false);
-    });
-
+    
   }
   detailview(item: any) {
     console.log("Route ID is -- > " + item)
