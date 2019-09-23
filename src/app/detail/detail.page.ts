@@ -19,7 +19,7 @@ export class DetailPage implements OnInit {
   requestfor: any;
   nodalpoint: any;
   loginout: any;
-  tripcompleted: any;
+  tripstatus: any;
   tripdate: any;
   today = new Date();
   dbdate = '';
@@ -40,7 +40,7 @@ export class DetailPage implements OnInit {
     this.requestfor = localStorage.getItem("RequestFor");
     this.nodalpoint = localStorage.getItem("NodalPoint");
     this.loginout = localStorage.getItem("LogInOut");
-    this.tripcompleted = localStorage.getItem("TripCompleted");
+    this.tripstatus = localStorage.getItem("TripStatus");
   }
   ionViewWillEnter() {
     this.presentLoading();

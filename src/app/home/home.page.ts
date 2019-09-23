@@ -105,9 +105,31 @@ export class HomePage {
     localStorage.setItem("RequestFor", item.RequestFor);
     localStorage.setItem("NodalPoint", item.NodalPoint);
     localStorage.setItem("LogInOut", item.LogInOut);
-    localStorage.setItem("TripCompleted", item.TripCompleted);
+    localStorage.setItem("TripStatus", item.TripStatus);
     localStorage.setItem("TripDate", item.TripDate);
     this.router.navigate(['/detail']);
+  }
+  getrowColor(code:any) { 
+    console.log(code+"status for color assign")
+    switch (code) {
+      case 1:
+          return '#f3f3f3'; //for Trip in progress 
+      case 2:
+          return '#ffa3a3'; //for Trip Completed
+      case 3:
+        return '#bfd7ad'; //for Trip Assigned or allocated
+    }
+  }
+  geticonColor(code:any) { 
+    console.log(code+"status for color assign")
+    switch (code) {
+      case 1:
+        return '#63a5d2'; //for Trip in progress 
+      case 2:
+        return '#9d5b5b'; //for Trip Completed
+      case 3:
+        return '#849776'; //for Trip Assigned or allocated
+    }
   }
   async presentLoading() {
     this.loading = await this.loadingController.create({
