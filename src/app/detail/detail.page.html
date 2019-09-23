@@ -28,12 +28,12 @@
 </ion-col>
     </ion-row> -->
     <ion-card *ngFor="let item of Tripdetaillist; let i = index">
-      <ion-row [ngStyle]="{'background':item.IsNewEmployee === false ? '#f3f3f3' : '#ffa3a3' }">
-        <ion-col size="2" style="color: #fff; text-align:center; " [ngStyle]="{'background':item.IsNewEmployee === false ? '#63a5d2' :'#9d5b5b'  }" >
+      <ion-row [ngStyle]="{'background':item.IsNewEmployee === false ? '#f3f3f3' : '#fcd0ab' }">
+        <ion-col size="2" style="color: #fff; text-align:center; " [ngStyle]="{'background':item.IsNewEmployee === false ? '#63a5d2' :'#F58120'  }" >
           <ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon>
         </ion-col>
         <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;">
-          <p style="line-height:20px; margin:0; font-size: 11px; overflow: hidden;white-space: nowrap;">{{item.EmployeeName}} </p>
+          <p style="line-height:20px; margin:0; font-size: 12px; overflow: hidden;white-space: nowrap;">{{item.EmployeeName}} </p>
           <p style="line-height:20px; margin:0; font-size: 14px;"> {{item.EmployeeID}}</p>
         </ion-col>
         <ion-col size="3" style="font-weight: bold; padding-left: 10px; color: #555; text-align:right; ">
@@ -42,7 +42,7 @@
         </ion-col>
       </ion-row>
     </ion-card>
- <!--  <ion-card>
+<!--    <ion-card>
     <ion-row style="background: #ffa3a3;">
       <ion-col size="2" style="background: #9d5b5b; color: #fff; text-align:center; ">
         <ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon>
@@ -71,8 +71,8 @@
     </ion-row>
   </ion-card>
   <ion-card>
-    <ion-row style="background: #f3f3f3;">
-      <ion-col size="2" style="background: #63a5d2; color: #fff; text-align:center; ">
+    <ion-row style="background: #fcd0ab">
+      <ion-col size="2" style="background: #F58120; color: #fff; text-align:center; ">
         <ion-icon name="contact" style="font-size:32px; margin-top: 5px;"></ion-icon>
       </ion-col>
       <ion-col size="7" style="font-weight: bold; padding-left: 10px; color: #555;">
@@ -100,6 +100,9 @@
 <ion-footer *ngIf="tripstatus==1" >
   <ion-grid style="padding: 0;">
     <ion-row style="padding: 0;">
+      <ion-col style="padding: 0;">
+        <ion-button expand="full" color="danger" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px;" (click)="Confirmtripclose()" >Trip Close</ion-button>
+      </ion-col>
       <ion-col style="padding: 0;">
         <ion-button expand="full" color="primary" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px" routerLink="/qrscan">Scan QR Code</ion-button>
       </ion-col>

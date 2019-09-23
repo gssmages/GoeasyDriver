@@ -16,9 +16,9 @@ export class HomePage {
 
   loading: any;
   listoftrips: any;
-  tripdate: any=formatDate(new Date(), 'dd-MMM-yyyy', 'en-US', '+0530');  ;
-  shownotrip=false;
-  showtrips=true;
+  tripdate: any = formatDate(new Date(), 'dd-MMM-yyyy', 'en-US', '+0530');;
+  shownotrip = false;
+  showtrips = true;
   constructor(
     private router: Router,
     private platform: Platform,
@@ -29,11 +29,10 @@ export class HomePage {
     private ga: GoogleAnalytics
   ) { }
   ngOnInit() {
-    this.ga.trackView('Home Page').then(() => {}).catch(e => console.log(e));
-    if(localStorage.getItem('mobilenumber')!="" && localStorage.getItem('DriverInternalID')!="")
-    {
-      this.globals.displayname=localStorage.getItem('DriverName');
-      this.globals.mobilenumber=localStorage.getItem('mobilenumber')
+    this.ga.trackView('Home Page').then(() => { }).catch(e => console.log(e));
+    if (localStorage.getItem('mobilenumber') != "" && localStorage.getItem('DriverInternalID') != "") {
+      this.globals.displayname = localStorage.getItem('DriverName');
+      this.globals.mobilenumber = localStorage.getItem('mobilenumber')
     }
     this.platform.backButton.subscribeWithPriority(9999, () => {
       document.addEventListener('backbutton', function (event) {
@@ -46,60 +45,60 @@ export class HomePage {
   }
   doRefresh(event) {
     this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
-      setTimeout(() => {     
+      setTimeout(() => {
         event.target.complete();
       }, 2000);
-      if (res.results != "") {       
-          console.log("results are : " + JSON.stringify(res.results))
-          this.tripdate = res.results[0].TripDate;
-          this.listoftrips = res.results;
-          this.shownotrip=false;
-          this.showtrips=true;     
+      if (res.results != "") {
+        console.log("results are : " + JSON.stringify(res.results))
+        this.tripdate = res.results[0].TripDate;
+        this.listoftrips = res.results;
+        this.shownotrip = false;
+        this.showtrips = true;
       }
       else {
-        this.shownotrip=true;
-        this.showtrips=false;   
+        this.shownotrip = true;
+        this.showtrips = false;
         //this.presentAlert("No Record Found!!!");
       }
     }, err => {
-      setTimeout(() => {     
+      setTimeout(() => {
         event.target.complete();
       }, 2000);
-      console.log(err);    
+      console.log(err);
       this.presentAlert(err);
     });
 
-   
+
   }
   ionViewWillEnter() {
     this.presentLoading();
     this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
       setTimeout(() => {
         this.loading.dismiss();
-    }, 1000);
-      if (res.results != "") {       
-          console.log("results are : " + JSON.stringify(res.results))
-          this.tripdate = res.results[0].TripDate;
-          this.listoftrips = res.results;
-          this.shownotrip=false;
-          this.showtrips=true;     
+      }, 1000);
+      if (res.results != "") {
+        console.log("results are : " + JSON.stringify(res.results))
+        this.tripdate = res.results[0].TripDate;
+        this.listoftrips = res.results;
+        this.shownotrip = false;
+        this.showtrips = true;
       }
       else {
-        this.shownotrip=true;
-        this.showtrips=false;   
+        this.shownotrip = true;
+        this.showtrips = false;
         //this.presentAlert("No Record Found!!!");
       }
     }, err => {
       console.log(err);
       setTimeout(() => {
         this.loading.dismiss();
-    }, 2000);
+      }, 2000);
       this.presentAlert(err);
     });
-    
+
   }
   detailview(item: any) {
-    console.log("Route ID is -- > " + item)
+    console.log("Route ID is -- > " + item.TripStatus)
     localStorage.setItem("RouteID", item.RouteID);
     localStorage.setItem("RouteNumber", item.RouteNumber);
     localStorage.setItem("RequestFor", item.RequestFor);
@@ -109,26 +108,26 @@ export class HomePage {
     localStorage.setItem("TripDate", item.TripDate);
     this.router.navigate(['/detail']);
   }
-  getrowColor(code:any) { 
-    console.log(code+"status for color assign")
+  getrowColor(code: any) {
+   // console.log(code + "status for color assign")
     switch (code) {
       case 1:
-          return '#f3f3f3'; //for Trip in progress 
+        return '#bfd7ad'; //for Trip in progress 
       case 2:
-          return '#ffa3a3'; //for Trip Completed
+        return '#ffa3a3'; //for Trip Completed
       case 3:
-        return '#bfd7ad'; //for Trip Assigned or allocated
+        return '#f3f3f3';  //for Trip Assigned or allocated
     }
   }
-  geticonColor(code:any) { 
-    console.log(code+"status for color assign")
+  geticonColor(code: any) {
+  //  console.log(code + "status for color assign")
     switch (code) {
       case 1:
-        return '#63a5d2'; //for Trip in progress 
+        return '#849776'; //for Trip in progress 
       case 2:
         return '#9d5b5b'; //for Trip Completed
       case 3:
-        return '#849776'; //for Trip Assigned or allocated
+        return '#63a5d2'; //for Trip Assigned or allocated
     }
   }
   async presentLoading() {

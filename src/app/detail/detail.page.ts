@@ -64,10 +64,6 @@ export class DetailPage implements OnInit {
       this.presentAlert(err);
     });
   }
-  getTripDetail() {
-    console.log("Trip Details are  -- > " + this.Tripdetaillist)
-    this.router.navigate(['/qrscan']);
-  }
   async presentLoading() {
     this.loading = await this.loadingController.create({
       message: 'Loading....',
@@ -83,6 +79,28 @@ export class DetailPage implements OnInit {
     });
 
     await alert.present();
+  }
+  async Confirmtripclose() {
+    const confirm =  await this.alertController.create({
+      header: 'GoEasy Confirm Trip close',
+      message: 'Are you sure want to close this trip',
+      buttons: [
+        {
+          text: 'NO',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'YES',
+          handler: () => {
+            this.router.navigate(['/home']);
+            console.log('yes clicked');
+          }
+        }
+      ]
+    });
+    await confirm.present();
   }
 
 }
