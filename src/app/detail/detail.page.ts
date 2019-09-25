@@ -94,6 +94,7 @@ export class DetailPage implements OnInit {
         {
           text: 'YES',
           handler: () => {
+            this.Tripclose();
             this.router.navigate(['/home']);
             console.log('yes clicked');
           }
@@ -101,6 +102,22 @@ export class DetailPage implements OnInit {
       ]
     });
     await confirm.present();
+  }
+  Tripclose()
+  {
+    this.presentLoading();
+    this.tripdetailservice.setTripClose(localStorage.getItem('RouteID'),localStorage.getItem('DriverInternalID')).subscribe(res => {     
+        this.loading.dismiss();    
+      if (res.results!= "") {
+       this.presentAlert(res.results.ErrorDesc );        
+      }         
+    }, err => {
+      console.log(err);
+      setTimeout(() => {
+        this.loading.dismiss();
+    }, 2000);
+      this.presentAlert(err);
+    });
   }
 
 }

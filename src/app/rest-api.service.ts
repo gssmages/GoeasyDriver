@@ -9,6 +9,7 @@ const HomeURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi
 const DetailpageURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetTripSheet?";
 const ScanURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/EmployeeCheckInCheckOut?";
 const AreaURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/AreaNodalPoint?";
+const TripcloseURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/Tripclose?";
 //const AreaURL="http://gssnte811.asia.ad.flextronics.com:4042/api/AdhocCabRequestApi/ReadAdhocCabRequestValues/?locationID=1&employeeID=941364";
 //const DetailpageURL="./assets/API/TripDetails.json";
 //const LoginValidURL="./assets/API/LoginValidation.json";
@@ -79,6 +80,12 @@ export class RestApiService {
     let params = new HttpParams()
     .set('LocationName', locationname)
   return this.http.get(AreaURL,{params}).pipe(catchError(this.handleError));
+  }
+  setTripClose(routeid: string, driverinternalID: string): Observable<any>{
+    let params = new HttpParams()
+    .set('RouteID', routeid)
+    .set('DriverInternalID', driverinternalID);
+  return this.http.get(TripcloseURL,{params}).pipe(catchError(this.handleError));
   }
 
   

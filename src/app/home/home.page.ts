@@ -114,7 +114,8 @@ export class HomePage {
       case 1:
         return '#bfd7ad'; //for Trip in progress 
       case 2:
-        return '#ffa3a3'; //for Trip Completed
+      case 4:
+        return '#ffa3a3'; //for 2 - Trip time elapsed , 4 - Trip Closed
       case 3:
         return '#f3f3f3';  //for Trip Assigned or allocated
     }
@@ -125,7 +126,8 @@ export class HomePage {
       case 1:
         return '#849776'; //for Trip in progress 
       case 2:
-        return '#9d5b5b'; //for Trip Completed
+      case 4:
+        return '#9d5b5b'; //for 2 - Trip time elapsed , 4 - Trip Closed
       case 3:
         return '#63a5d2'; //for Trip Assigned or allocated
     }
