@@ -3,6 +3,11 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 
+const SITserver="http://hkdnte250.asia.ad.flextronics.com:1227/";
+const testserver="https://testmobile.flextronics.com/goeasyapi";
+const prodserver="https://mobileservice.flex.com/goeasyapi";
+
+/****   Goeasy SIT Server ***********/
 const LoginURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/RequestOTP?";
 const LoginValidURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/ValidateOTP?";
 const HomeURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetHomepage?";
@@ -14,6 +19,15 @@ const TripcloseURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobi
 //const DetailpageURL="./assets/API/TripDetails.json";
 //const LoginValidURL="./assets/API/LoginValidation.json";
 //const HomeURL="http://www.mocky.io/v2/5d173f3e2f0000672d25faaa";
+
+/****   Goeasy Prod Server ***********/
+/* const LoginURL=prodserver+"/api/DriverMobileApi/RequestOTP?";
+const LoginValidURL=prodserver+"/api/DriverMobileApi/ValidateOTP?";
+const HomeURL=prodserver+"/api/DriverMobileApi/GetHomepage?";
+const DetailpageURL=prodserver+"/api/DriverMobileApi/GetTripSheet?";
+const ScanURL=prodserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
+const AreaURL=prodserver+"/api/DriverMobileApi/AreaNodalPoint?";
+const TripcloseURL=prodserver+"/api/DriverMobileApi/Tripclose?"; */
 
 @Injectable({
   providedIn: 'root',
@@ -66,12 +80,14 @@ export class RestApiService {
       .set('RouteID', routeid);
   return this.http.get(DetailpageURL,{params}).pipe(catchError(this.handleError));
   }
-  verifyQRScan(locationname: string, routeid: string,tripsheetid: string,employeeid: string,nodalpointid: string,routechange: string): Observable<any>{
+  verifyQRScan(locationname: string, routeid: string,tripsheetid: string,employeeid: string,geolat: string,geolang: string,nodalpointid: string,routechange: string): Observable<any>{
     let params = new HttpParams()
      .set('LocationName', locationname)
      .set('TripID', routeid)
      .set('TripSheetID', tripsheetid)
      .set('EmployeeID', employeeid)
+     .set('GeoLat', geolat)
+     .set('GeoLang', geolang)
      .set('NodalPointID', nodalpointid)
      .set('RouteChangeYesNo', routechange);
   return this.http.get(ScanURL,{params}).pipe(catchError(this.handleError));

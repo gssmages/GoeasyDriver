@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AreamodalComponent } from '../areamodal/areamodal.component';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
   selector: 'app-qrscan',
   templateUrl: './qrscan.page.html',
@@ -29,6 +30,8 @@ export class QrscanPage implements OnInit {
   nodalpointid: any = "";
   routechange: any = "";
   checkoutscanned = false;
+  GeoLang = "";
+  GeoLat="";
   constructor(
     private qrScanner: QRScanner,
     public globals: Globals,
@@ -36,21 +39,38 @@ export class QrscanPage implements OnInit {
     public loadingController: LoadingController,
     private qrscanservice: RestApiService,
     private router: Router,
-    public modalController: ModalController,public toastController: ToastController,private ga: GoogleAnalytics) { }
+    public modalController: ModalController,public toastController: ToastController,private ga: GoogleAnalytics,private geolocation: Geolocation) { }
 
   ngOnInit() {
     this.ga.trackView('QRScan Page').then(() => {}).catch(e => console.log(e));
     //console.log(this.globals.Tripsheetdetail)
     this.employeedetail = this.globals.Tripsheetdetail;
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log(resp.coords.latitude)
+      console.log(resp.coords.longitude)
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
    // console.log(this.employeedetail)
    // this.presentToast("test message")
   }
 
   async getQRScan() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log(resp.coords.latitude)
+      console.log(resp.coords.longitude)
+      this.GeoLat=(resp.coords.latitude).toString();
+      this.GeoLang=(resp.coords.longitude).toString();
+      //alert(this.GeoLat+" "+this.GeoLang)
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
     this.employeeid = "";
     this.tripsheetid = "";
    //this.verifyScannedData("599918")
     //console.log("scanned data verify ---> "+this.startscan)
+    if(this.GeoLang!=='' && this.GeoLang!=='')
+    {
    this.qrScanner.prepare()
           .then((status: QRScannerStatus) => {
             if (status.authorized) {
@@ -81,6 +101,11 @@ export class QrscanPage implements OnInit {
             }
           })
           .catch((e: any) => console.log('Error is', e));   
+        }
+        else
+        {
+          this.presentAlert("Please allow device to get location")
+        }
   }
   stopQRscanning() {
     this.isOn = false;
@@ -141,8 +166,9 @@ export class QrscanPage implements OnInit {
   callverifyservice()
   {
     this.presentLoading();
+    
     this.qrscanservice.verifyQRScan(
-      localStorage.getItem('LocationName'), localStorage.getItem('RouteID'), this.tripsheetid, this.employeeid,
+      localStorage.getItem('LocationName'), localStorage.getItem('RouteID'), this.tripsheetid, this.employeeid, this.GeoLat, this.GeoLang,
       this.nodalpointid, this.routechange).subscribe(res => {
         console.log("results are : " + JSON.stringify(res.results))
         this.loading.dismiss();

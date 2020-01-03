@@ -25,6 +25,7 @@
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/file": "^5.8.0",
     "@ionic-native/file-opener": "^5.8.0",
+    "@ionic-native/geolocation": "^5.19.0",
     "@ionic-native/google-analytics": "^5.7.0",
     "@ionic-native/http": "^5.8.0",
     "@ionic-native/qr-scanner": "^5.9.0",
@@ -113,7 +114,8 @@
       },
       "cordova-plugin-qrscanner": {},
       "cordova-plugin-appcenter-analytics": {},
-      "cordova-plugin-appcenter-crashes": {}
+      "cordova-plugin-appcenter-crashes": {},
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "android",

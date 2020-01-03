@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { CodePush } from '@ionic-native/code-push/ngx';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 @NgModule({
   declarations: [AppComponent,AreamodalComponent],
   entryComponents: [AreamodalComponent],
@@ -39,6 +40,7 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
     Globals,
     CodePush,
     GoogleAnalytics,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy,deps: [HttpClientModule] }
   ],
   bootstrap: [AppComponent]

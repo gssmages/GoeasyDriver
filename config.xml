@@ -109,6 +109,7 @@
     <plugin name="cordova-plugin-code-push" spec="1.11.18" />
     <plugin name="cordova-plugin-appcenter-analytics" spec="^0.4.0" />
     <plugin name="cordova-plugin-appcenter-crashes" spec="^0.4.0" />
+    <plugin name="cordova-plugin-geolocation" spec="~4.0.2" />
     <engine name="android" spec="7.1.4" />
     <engine name="ios" spec="4.5.5" />
 </widget>

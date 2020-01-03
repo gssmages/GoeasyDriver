@@ -7,6 +7,7 @@ import { RestApiService } from '../rest-api.service';
 import { formatDate } from '@angular/common';
 import { Globals } from '../globals';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -26,7 +27,8 @@ export class HomePage {
     public loadingController: LoadingController,
     private homeservice: RestApiService,
     public globals: Globals,
-    private ga: GoogleAnalytics
+    private ga: GoogleAnalytics,
+    private geolocation: Geolocation
   ) { }
   ngOnInit() {
     this.ga.trackView('Home Page').then(() => { }).catch(e => console.log(e));
@@ -41,7 +43,13 @@ export class HomePage {
         console.log('back button disabled');
       }, false);
     });
-
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log(resp.coords.latitude)
+      console.log(resp.coords.longitude)
+     // alert(resp.coords.latitude+"__"+resp.coords.longitude)
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
   doRefresh(event) {
     this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
