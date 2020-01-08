@@ -67,8 +67,8 @@ export class QrscanPage implements OnInit {
      });
     this.employeeid = "";
     this.tripsheetid = "";
-   //this.verifyScannedData("599918")
-    //console.log("scanned data verify ---> "+this.startscan)
+  // this.verifyScannedData("1097080")
+  //  console.log("scanned data verify ---> "+this.startscan)
     if(this.GeoLang!=='' && this.GeoLang!=='')
     {
    this.qrScanner.prepare()
@@ -130,8 +130,8 @@ export class QrscanPage implements OnInit {
           }
           else {
             this.checkoutscanned = true;
-            console.log("Check Out Scan  Already Done")
-            this.presentToast("Check Out Scan Already Done ");
+            console.log("You already Checked-Out")
+            this.presentToast("You already Checked-Out");
             this.getQRScan();
             //this.presentAlert("Check Out Scan Already Done ");
           }
@@ -281,14 +281,14 @@ export class QrscanPage implements OnInit {
     header: 'GoEasy Confirm Route Change',
     message: message,
     buttons: [
-      {
+     /*  {
         text: 'NO',
         handler: () => {
           console.log('No clicked');
         }
-      },
+      }, */
       {
-        text: 'YES',
+        text: 'OK',
         handler: () => {
           this.routechange="true";
           console.log('yes clicked');
