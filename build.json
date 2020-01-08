@@ -1,0 +1,11 @@
+{
+  "android": {
+    "release": {
+      "keystore": "mobilecoe.keystore",
+      "storePassword": "Flex_123",
+      "alias": "prodandroidkey",
+      "password" : "Flex_123",
+      "keystoreType": ""
+    }
+  }
+}
