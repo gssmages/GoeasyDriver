@@ -25,7 +25,7 @@
     <preference name="APPCENTER_ANALYTICS_ENABLE_IN_JS" value="false" />
     <preference name="APPCENTER_CRASHES_ALWAYS_SEND" value="true" />
     <platform name="android">
-        <preference name="CodePushDeploymentKey" value="1s-aJqX2n3eZpyOLt8pjqFVCOOBm14128d38-686a-46f0-9316-1b729c7c3c68" />
+        <preference name="CodePushDeploymentKey" value="5hmYqXjYhCaPPB_mmRVHwd8LVHFp14128d38-686a-46f0-9316-1b729c7c3c68" />
         <preference name="APP_SECRET" value="adcc6e94-b175-447d-a260-00af0f68a756" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:networkSecurityConfig="@xml/network_security_config" />
@@ -53,7 +53,7 @@
         <splash density="port-xxxhdpi" src="resources\android\splash\drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
-        <preference name="CodePushDeploymentKey" value="LaTCvFVvmycktvy__EpDPBrZtWCn14128d38-686a-46f0-9316-1b729c7c3c68" />
+        <preference name="CodePushDeploymentKey" value="jOgzoAvzQ6F8boF0BpqfccAAN0IW14128d38-686a-46f0-9316-1b729c7c3c68" />
         <preference name="APP_SECRET" value="0e095722-4d10-43e2-8953-54a3422f300b" />
         <preference name="iosPersistentFileLocation" value="Compatibility" />
         <allow-intent href="itms:*" />

@@ -5,29 +5,31 @@ import { catchError, tap, map } from 'rxjs/operators';
 
 const SITserver="http://hkdnte250.asia.ad.flextronics.com:1227/";
 const testserver="https://testmobile.flextronics.com/goeasyapi";
-const prodserver="https://mobileservice.flex.com/goeasyapi";
+const prodserver="https://mobileservice.flex.com/goeasydriver";
 
 /****   Goeasy SIT Server ***********/
-const LoginURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/RequestOTP?";
+/* const LoginURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/RequestOTP?";
 const LoginValidURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/ValidateOTP?";
 const HomeURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetHomepage?";
 const DetailpageURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetTripSheet?";
 const ScanURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/EmployeeCheckInCheckOut?";
 const AreaURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/AreaNodalPoint?";
-const TripcloseURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/Tripclose?";
+const TripcloseURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/Tripclose?"; */
+
+/******For Development tesing ******/
 //const AreaURL="http://gssnte811.asia.ad.flextronics.com:4042/api/AdhocCabRequestApi/ReadAdhocCabRequestValues/?locationID=1&employeeID=941364";
 //const DetailpageURL="./assets/API/TripDetails.json";
 //const LoginValidURL="./assets/API/LoginValidation.json";
 //const HomeURL="http://www.mocky.io/v2/5d173f3e2f0000672d25faaa";
 
 /****   Goeasy Prod Server ***********/
-/* const LoginURL=prodserver+"/api/DriverMobileApi/RequestOTP?";
+const LoginURL=prodserver+"/api/DriverMobileApi/RequestOTP?";
 const LoginValidURL=prodserver+"/api/DriverMobileApi/ValidateOTP?";
 const HomeURL=prodserver+"/api/DriverMobileApi/GetHomepage?";
 const DetailpageURL=prodserver+"/api/DriverMobileApi/GetTripSheet?";
 const ScanURL=prodserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
 const AreaURL=prodserver+"/api/DriverMobileApi/AreaNodalPoint?";
-const TripcloseURL=prodserver+"/api/DriverMobileApi/Tripclose?"; */
+const TripcloseURL=prodserver+"/api/DriverMobileApi/Tripclose?";
 
 @Injectable({
   providedIn: 'root',
