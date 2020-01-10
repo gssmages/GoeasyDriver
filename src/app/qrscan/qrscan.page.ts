@@ -61,6 +61,8 @@ export class QrscanPage implements OnInit {
       console.log(resp.coords.longitude)
       this.GeoLat=(resp.coords.latitude).toString();
       this.GeoLang=(resp.coords.longitude).toString();
+      localStorage.setItem("GeoLat",this.GeoLat);
+      localStorage.setItem("GeoLang",this.GeoLang);
       //alert(this.GeoLat+" "+this.GeoLang)
      }).catch((error) => {
        console.log('Error getting location', error);
@@ -69,7 +71,7 @@ export class QrscanPage implements OnInit {
     this.tripsheetid = "";
   // this.verifyScannedData("1097080")
   //  console.log("scanned data verify ---> "+this.startscan)
-    if(this.GeoLang!=='' && this.GeoLang!=='')
+    if(localStorage.getItem('GeoLat') != "" && localStorage.getItem('GeoLang') != "")
     {
    this.qrScanner.prepare()
           .then((status: QRScannerStatus) => {
