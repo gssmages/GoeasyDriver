@@ -33,7 +33,9 @@ export class DetailPage implements OnInit {
     public globals: Globals, private ga: GoogleAnalytics) { }
 
   ngOnInit() {
-    this.ga.trackView('TripSheet Page').then(() => {}).catch(e => console.log(e));
+    this.ga.trackView('TripSheet Page').then(() => {}).catch(e => console.log(e));  
+  }
+  ionViewWillEnter() {
     this.dbdate = localStorage.getItem("TripDate");
     this.routeID = localStorage.getItem("RouteID");
     this.routenumber = localStorage.getItem("RouteNumber");
@@ -41,8 +43,6 @@ export class DetailPage implements OnInit {
     this.nodalpoint = localStorage.getItem("NodalPoint");
     this.loginout = localStorage.getItem("LogInOut");
     this.tripstatus = localStorage.getItem("TripStatus");
-  }
-  ionViewWillEnter() {
     this.presentLoading();
     this.tripdetailservice.getTripDetail(localStorage.getItem('RouteID')).subscribe(res => {
       setTimeout(() => {
