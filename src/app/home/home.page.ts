@@ -114,6 +114,7 @@ export class HomePage {
     localStorage.setItem("LogInOut", item.LogInOut);
     localStorage.setItem("TripStatus", item.TripStatus);
     localStorage.setItem("TripDate", item.TripDate);
+    localStorage.setItem("TripStart", item.TripStart);
     this.router.navigate(['/detail']);
   }
   getrowColor(code: any) {

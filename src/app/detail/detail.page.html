@@ -103,8 +103,11 @@
       <ion-col style="padding: 0;" *ngIf="tripstatus==1 || tripstatus==2">
         <ion-button expand="full" color="danger" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px;" (click)="Confirmtripclose()" >Complete Trip</ion-button>
       </ion-col>
-      <ion-col style="padding: 0;" *ngIf="tripstatus==1">
+      <ion-col style="padding: 0;" *ngIf="tripstatus==1 && tripstart==1">
         <ion-button expand="full" color="primary" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px" routerLink="/qrscan">Scan QR Code</ion-button>
+      </ion-col>
+      <ion-col style="padding: 0;" *ngIf="tripstatus==1 && tripstart==0">
+        <ion-button expand="full" color="dark" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px" (click)="TripStart()">Start Trip</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

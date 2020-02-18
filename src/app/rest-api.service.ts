@@ -6,16 +6,16 @@ import { catchError, tap, map } from 'rxjs/operators';
 const SITserver="http://hkdnte250.asia.ad.flextronics.com:1227/";
 const testserver="https://testmobile.flextronics.com/goeasyapi";
 const prodserver="https://mobileservice.flex.com/goeasydriver";
-
+const localserver="http://localhost:57855";
 /****   Goeasy SIT Server ***********/
-/* const LoginURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/RequestOTP?";
-const LoginValidURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/ValidateOTP?";
-const HomeURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetHomepage?";
-const DetailpageURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/GetTripSheet?";
-const ScanURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/EmployeeCheckInCheckOut?";
-const AreaURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/AreaNodalPoint?";
-const TripcloseURL="http://hkdnte250.asia.ad.flextronics.com:1227/api/DriverMobileApi/Tripclose?"; */
-
+ /*const LoginURL=SITserver+"/api/DriverMobileApi/RequestOTP?";
+const LoginValidURL=SITserver+"/api/DriverMobileApi/ValidateOTP?";
+const HomeURL=SITserver+"/api/DriverMobileApi/GetHomepage?";
+const DetailpageURL=SITserver+"/api/DriverMobileApi/GetTripSheet?";
+const ScanURL=SITserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
+const AreaURL=SITserver+"/api/DriverMobileApi/AreaNodalPoint?";
+const TripcloseURL=SITserver+"/api/DriverMobileApi/Tripclose?"; 
+const TripstartURL=SITserver+"/api/DriverMobileApi/DriverTripStart?"; */
 /******For Development tesing ******/
 //const AreaURL="http://gssnte811.asia.ad.flextronics.com:4042/api/AdhocCabRequestApi/ReadAdhocCabRequestValues/?locationID=1&employeeID=941364";
 //const DetailpageURL="./assets/API/TripDetails.json";
@@ -30,7 +30,7 @@ const DetailpageURL=prodserver+"/api/DriverMobileApi/GetTripSheet?";
 const ScanURL=prodserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
 const AreaURL=prodserver+"/api/DriverMobileApi/AreaNodalPoint?";
 const TripcloseURL=prodserver+"/api/DriverMobileApi/Tripclose?";
-
+const TripstartURL=prodserver+"/api/DriverMobileApi/DriverTripStart?";
 @Injectable({
   providedIn: 'root',
 })
@@ -99,11 +99,21 @@ export class RestApiService {
     .set('LocationName', locationname)
   return this.http.get(AreaURL,{params}).pipe(catchError(this.handleError));
   }
-  setTripClose(routeid: string, driverinternalID: string): Observable<any>{
+  setTripClose(routeid: string, driverinternalID: string,geolat: string,geolang: string): Observable<any>{
     let params = new HttpParams()
     .set('RouteID', routeid)
-    .set('DriverInternalID', driverinternalID);
+    .set('DriverInternalID', driverinternalID)
+    .set('GeoLat', geolat)
+    .set('GeoLang', geolang);
   return this.http.get(TripcloseURL,{params}).pipe(catchError(this.handleError));
+  }
+  setTripStart(routeid: string, driverinternalID: string,geolat: string,geolang: string): Observable<any>{
+    let params = new HttpParams()
+    .set('Route', routeid)
+    .set('DriverID', driverinternalID)
+    .set('GeoLat', geolat)
+    .set('GeoLang', geolang);
+  return this.http.get(TripstartURL,{params}).pipe(catchError(this.handleError));
   }
 
   
