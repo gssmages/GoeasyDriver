@@ -28,6 +28,7 @@ export class DetailPage implements OnInit {
   Tripdetaillist: any;
   GeoLang = "";
   GeoLat="";
+  shiftlabel:any;
   constructor(public alertController: AlertController,
     public loadingController: LoadingController,
     private tripdetailservice: RestApiService,
@@ -58,6 +59,15 @@ export class DetailPage implements OnInit {
     this.loginout = localStorage.getItem("LogInOut");
     this.tripstatus = localStorage.getItem("TripStatus");
     this.tripstart=localStorage.getItem("TripStart");
+    if(this.requestfor=="Pickup")
+    {
+        this.shiftlabel="Login";
+    }
+    else if(this.requestfor=="Drop"){
+      this.shiftlabel="Logout";
+    }
+    else{ this.shiftlabel="Login/Logout"; }
+   
     this.presentLoading();
     this.tripdetailservice.getTripDetail(localStorage.getItem('RouteID')).subscribe(res => {
       setTimeout(() => {

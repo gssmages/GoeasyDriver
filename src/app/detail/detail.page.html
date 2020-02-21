@@ -15,7 +15,7 @@
       <div style="color: #fff;">{{requestfor}} ({{routenumber}}) - {{nodalpoint}}</div>
     </ion-col>
     <ion-col size="12" text-center color="secondary" style="background: #2875a9;border: 0;">
-      <div style="color: #fff;">Date : {{dbdate}} Shift Time : {{loginout}}</div>
+      <div style="color: #fff;">Date : {{dbdate}} {{shiftlabel}} : {{loginout}}</div>
     </ion-col>
   </ion-row>
     <!-- <ion-row  >       
@@ -100,7 +100,7 @@
 <ion-footer  >
   <ion-grid style="padding: 0;">
     <ion-row style="padding: 0;">
-      <ion-col style="padding: 0;" *ngIf="tripstatus==1 || tripstatus==2">
+      <ion-col style="padding: 0;" *ngIf="(tripstatus==1 || tripstatus==2) && tripstart==1">
         <ion-button expand="full" color="danger" style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px;" (click)="Confirmtripclose()" >Complete Trip</ion-button>
       </ion-col>
       <ion-col style="padding: 0;" *ngIf="tripstatus==1 && tripstart==1">
