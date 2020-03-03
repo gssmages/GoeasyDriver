@@ -48,7 +48,7 @@ export class AppComponent {
     private ga: GoogleAnalytics,
   ) {
     this.initializeApp();
-    this.globals.appversion="1.0.0"; //Manual app versioon changes 
+    this.globals.appversion="1.0.1"; //Manual app versioon changes 
   }
 
   initializeApp() {
@@ -70,7 +70,9 @@ export class AppComponent {
      }, */
      installMode: InstallMode.IMMEDIATE
   },(progress)=>{
-
+    this.router.navigate(['/update']);
+    localStorage.setItem("updatemsg",`Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`);
+    console.log(`Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`)
   }).subscribe((status)=>{
     // if(status==SyncStatus.CHECKING_FOR_UPDATE)
     // alert("Checking for Update");

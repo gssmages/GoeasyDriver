@@ -7,6 +7,7 @@ import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { Globals } from '../globals';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
+import { CodePush, InstallMode, SyncStatus } from '@ionic-native/code-push/ngx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -28,12 +29,34 @@ export class LoginPage implements OnInit {
     public loadingController: LoadingController,
     private loginservice: RestApiService,
     public globals: Globals,
-    private ga: GoogleAnalytics
+    private ga: GoogleAnalytics,
+    private codePush: CodePush
   ) { }
 
   ngOnInit() {
     this.ga.trackView('Login Page').then(() => {}).catch(e => console.log(e));    
-    console.log(localStorage.getItem('mobilenumber'))
+    console.log(localStorage.getItem('mobilenumber'))   
+    this.codePush.sync({ installMode: InstallMode.IMMEDIATE}).subscribe((status)=>{     
+      if(status==SyncStatus.DOWNLOADING_PACKAGE)
+      {
+        this.router.navigate(['/update']);
+        localStorage.setItem("updatemsg","Downloading Package");
+      }    
+      if(status==SyncStatus.IN_PROGRESS)
+      {       
+        localStorage.setItem("updatemsg","Please wait..<br>App is updating");
+      }     
+      if(status==SyncStatus.INSTALLING_UPDATE)
+      {  
+        localStorage.setItem("updatemsg","Installing update");
+      }    
+      if(status==SyncStatus.UPDATE_INSTALLED)
+      localStorage.setItem("updatemsg","Update Installed");
+     
+      if(status==SyncStatus.ERROR)
+      localStorage.setItem("updatemsg","Error While Updating");
+     
+    });
     if(localStorage.getItem('mobilenumber')!=null && localStorage.getItem('DriverInternalID')!=null)
     {
       this.ga.setUserId(localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))
@@ -41,7 +64,6 @@ export class LoginPage implements OnInit {
       this.globals.mobilenumber=localStorage.getItem('mobilenumber')
       this.router.navigate(['/home']);
     }
-
   }
   ionViewWillEnter() { this.menu.enable(false); }
   ionViewDidLeave() {
