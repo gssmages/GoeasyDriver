@@ -48,6 +48,10 @@ export class QrscanPage implements OnInit {
     this.geolocation.getCurrentPosition().then((resp) => {
       console.log(resp.coords.latitude)
       console.log(resp.coords.longitude)
+      this.GeoLat=(resp.coords.latitude).toString();
+      this.GeoLang=(resp.coords.longitude).toString();
+      localStorage.setItem("GeoLat",this.GeoLat);
+      localStorage.setItem("GeoLang",this.GeoLang);
      }).catch((error) => {
        console.log('Error getting location', error);
      });
@@ -170,7 +174,7 @@ export class QrscanPage implements OnInit {
     this.presentLoading();
     
     this.qrscanservice.verifyQRScan(
-      localStorage.getItem('LocationName'), localStorage.getItem('RouteID'), this.tripsheetid, this.employeeid, this.GeoLat, this.GeoLang,
+      localStorage.getItem('LocationName'), localStorage.getItem('RouteID'), this.tripsheetid, this.employeeid, localStorage.getItem('GeoLat'),localStorage.getItem('GeoLang'),
       this.nodalpointid, this.routechange).subscribe(res => {
         console.log("results are : " + JSON.stringify(res.results))
         this.loading.dismiss();
