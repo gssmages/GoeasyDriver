@@ -8,7 +8,7 @@ const testserver="https://testmobile.flextronics.com/goeasyapi";
 const prodserver="https://mobileservice.flex.com/goeasydriver";
 const localserver="http://localhost:57855";
 /****   Goeasy SIT Server ***********/
- /*const LoginURL=SITserver+"/api/DriverMobileApi/RequestOTP?";
+/* const LoginURL=SITserver+"/api/DriverMobileApi/RequestOTP?";
 const LoginValidURL=SITserver+"/api/DriverMobileApi/ValidateOTP?";
 const HomeURL=SITserver+"/api/DriverMobileApi/GetHomepage?";
 const DetailpageURL=SITserver+"/api/DriverMobileApi/GetTripSheet?";
@@ -30,7 +30,7 @@ const DetailpageURL=prodserver+"/api/DriverMobileApi/GetTripSheet?";
 const ScanURL=prodserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
 const AreaURL=prodserver+"/api/DriverMobileApi/AreaNodalPoint?";
 const TripcloseURL=prodserver+"/api/DriverMobileApi/Tripclose?";
-const TripstartURL=prodserver+"/api/DriverMobileApi/DriverTripStart?";
+const TripstartURL=prodserver+"/api/DriverMobileApi/DriverTripStart?"; 
 @Injectable({
   providedIn: 'root',
 })
@@ -38,22 +38,28 @@ const TripstartURL=prodserver+"/api/DriverMobileApi/DriverTripStart?";
 export class RestApiService {
   dbdate='';
   today= new Date();
-
+  errormsg ='';
   constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
+  
+    if (!navigator.onLine) {
+      console.error('No Internet Connection')
+      this.errormsg = 'No Internet Connection';
+  }
+    else if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
     } else {
-      // The backend returned an unsuccessful response code.
+      // The backend returned an unsuccessful response code. 'Network failed. Please try again.'
       // The response body may contain clues as to what went wrong,
+      this.errormsg = `Server Error Status: ${error.status} Text: ${error.statusText}`
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: ${error.error}`);
     }
     // return an observable with a user-facing error message
-    return throwError('Network failed. Please try again.');
+    return throwError(this.errormsg);
   }
 
   

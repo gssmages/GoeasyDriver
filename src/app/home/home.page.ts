@@ -44,8 +44,8 @@ export class HomePage {
       }, false);
     });
     this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords.latitude)
-      console.log(resp.coords.longitude)
+     // console.log(resp.coords.latitude)
+    //  console.log(resp.coords.longitude)
      // alert(resp.coords.latitude+"__"+resp.coords.longitude)
      }).catch((error) => {
        console.log('Error getting location', error);
@@ -57,7 +57,6 @@ export class HomePage {
         event.target.complete();
       }, 2000);
       if (res.results != "") {
-        console.log("results are : " + JSON.stringify(res.results))
         this.tripdate = res.results[0].TripDate;
         this.listoftrips = res.results;
         this.shownotrip = false;
@@ -85,7 +84,7 @@ export class HomePage {
         this.loading.dismiss();
       }, 1000);
       if (res.results != "") {
-        console.log("results are : " + JSON.stringify(res.results))
+       // console.log("results are : " + JSON.stringify(res.results))
         this.tripdate = res.results[0].TripDate;
         this.listoftrips = res.results;
         this.shownotrip = false;
@@ -106,7 +105,7 @@ export class HomePage {
 
   }
   detailview(item: any) {
-    console.log("Route ID is -- > " + item.TripStatus)
+   // console.log("Route ID is -- > " + item.TripStatus)
     localStorage.setItem("RouteID", item.RouteID);
     localStorage.setItem("RouteNumber", item.RouteNumber);
     localStorage.setItem("RequestFor", item.RequestFor);
