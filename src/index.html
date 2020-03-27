@@ -30,11 +30,15 @@
     //ga('set', 'userId', localStorage.getItem("displayname"));
     gtag('set', {'user_id': (localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))}); // Set the user ID using signed-in user_id.
     console.log(localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))
+
+ 
   </script>
 </head>
 
 <body>
   <app-root></app-root>
 </body>
-
+<script type="text/javascript">
+  if (top !== self) top.location.replace(self.location.href);
+  </script>
 </html>
