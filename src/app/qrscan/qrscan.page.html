@@ -13,6 +13,7 @@
         <ion-buttons slot="end" (click)="Enablelight()">
                 <ion-icon name="flashlight" slot="icon-only" ></ion-icon>
           </ion-buttons>
+          <p class="versionno">{{this.globals.appversion}}</p>
     </ion-toolbar>
   </ion-header>
 <ion-content [class.show-qr-scanner]="isOn" style="background: none transparent;" >

@@ -6,4 +6,5 @@ export class Globals {
   displayname: string;
   mobilenumber: string;
   appversion: string;
+  geowatcher:any;
 }

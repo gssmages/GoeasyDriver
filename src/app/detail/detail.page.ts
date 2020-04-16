@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { AlertController } from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
+import { AlertController,Platform} from '@ionic/angular';
+import { LoadingController,ToastController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { Router } from '@angular/router';
 import { Globals } from '../globals';
@@ -22,6 +22,7 @@ export class DetailPage implements OnInit {
   loginout: any;
   tripstatus: any;
   tripstart: any;
+  tripcode: any = '';
   tripdate: any;
   today = new Date();
   dbdate = '';
@@ -33,13 +34,19 @@ export class DetailPage implements OnInit {
     public loadingController: LoadingController,
     private tripdetailservice: RestApiService,
     private router: Router,
-    public globals: Globals, private ga: GoogleAnalytics,private geolocation: Geolocation) { }
+    public globals: Globals, private ga: GoogleAnalytics,
+    private geolocation: Geolocation, 
+    public toastController: ToastController,
+    private platform: Platform) { }
 
   ngOnInit() {
-    this.ga.trackView('TripSheet Page').then(() => {}).catch(e => console.log(e));  
-
+    this.ga.trackView('TripSheet Page').then(() => {}).catch(e => console.log(e));     
   }
   ionViewWillEnter() {
+   this.platform.backButton.subscribe(async () => {
+      // Catches the active view
+      this.router.navigate(['/home']);
+    });
     this.geolocation.getCurrentPosition().then((resp) => {
       console.log(resp.coords.latitude)
       console.log(resp.coords.longitude)
@@ -51,6 +58,8 @@ export class DetailPage implements OnInit {
      }).catch((error) => {
        console.log('Error getting location', error);
      });
+
+     
     this.dbdate = localStorage.getItem("TripDate");
     this.routeID = localStorage.getItem("RouteID");
     this.routenumber = localStorage.getItem("RouteNumber");
@@ -59,6 +68,10 @@ export class DetailPage implements OnInit {
     this.loginout = localStorage.getItem("LogInOut");
     this.tripstatus = localStorage.getItem("TripStatus");
     this.tripstart=localStorage.getItem("TripStart");
+    if(localStorage.getItem("TripCode")!= "null")
+    {
+      this.tripcode = " (Code : "+ localStorage.getItem("TripCode") + " )"
+    }
     if(this.requestfor=="Pickup")
     {
         this.shiftlabel="Login";
@@ -140,6 +153,11 @@ export class DetailPage implements OnInit {
        if(res.results.ErrorCode=="0") {
         localStorage.setItem("TripStart", "1");
         this.router.navigate(['/home']);
+        localStorage.setItem("CurrentRouteNumber", localStorage.getItem('RouteNumber'));
+        localStorage.setItem('CurrentLogInOut',localStorage.getItem('LogInOut'))
+      this.globals.geowatcher = setInterval(() => {
+          this.UpdateGeoLatLang();
+      }, 30000);
        }    
       }         
     }, err => {
@@ -168,6 +186,32 @@ export class DetailPage implements OnInit {
     }, 2000);
       this.presentAlert(err);
     });
+  }
+ UpdateGeoLatLang()
+  {
+    this.tripdetailservice.updateGeoLatLang(localStorage.getItem('LocationName'),localStorage.getItem('CurrentRouteNumber'),localStorage.getItem('TripDate'),
+    localStorage.getItem('CurrentLogInOut'),localStorage.getItem('GeoLat'),localStorage.getItem('GeoLang')).subscribe(res => {     
+      console.log(res)
+        this.loading.dismiss();    
+      if (res.results != "") {
+       this.presentToast(res.results);        
+      }         
+    }, err => {
+      console.log(err);
+      setTimeout(() => {
+        this.loading.dismiss();
+    }, 2000);
+      this.presentAlert(err);
+    });
+  }
+  async presentToast(toastmessage: string) {
+    const toast = await this.toastController.create({
+      message: toastmessage,
+      duration:5000,
+      position:"middle",
+      cssClass:"messagealert"
+    });
+    toast.present();
   }
 
 }

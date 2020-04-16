@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController,Platform} from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 
@@ -20,7 +20,7 @@ export class LoginPage implements OnInit {
   private loading: any;
   showmobilenumber: boolean = true;
   showotpblock: boolean = false;
-
+  backButtonSubscription:any;
 
   constructor(
     private router: Router,
@@ -30,33 +30,13 @@ export class LoginPage implements OnInit {
     private loginservice: RestApiService,
     public globals: Globals,
     private ga: GoogleAnalytics,
-    private codePush: CodePush
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.ga.trackView('Login Page').then(() => {}).catch(e => console.log(e));    
     console.log(localStorage.getItem('mobilenumber'))   
-    this.codePush.sync({ installMode: InstallMode.IMMEDIATE}).subscribe((status)=>{     
-      if(status==SyncStatus.DOWNLOADING_PACKAGE)
-      {
-        this.router.navigate(['/update']);
-        localStorage.setItem("updatemsg","Downloading Package");
-      }    
-      if(status==SyncStatus.IN_PROGRESS)
-      {       
-        localStorage.setItem("updatemsg","Please wait..<br>App is updating");
-      }     
-      if(status==SyncStatus.INSTALLING_UPDATE)
-      {  
-        localStorage.setItem("updatemsg","Installing update");
-      }    
-      if(status==SyncStatus.UPDATE_INSTALLED)
-      localStorage.setItem("updatemsg","Update Installed");
-     
-      if(status==SyncStatus.ERROR)
-      localStorage.setItem("updatemsg","Error While Updating");
-     
-    });
+   
     if(localStorage.getItem('mobilenumber')!=null && localStorage.getItem('DriverInternalID')!=null)
     {
       this.ga.setUserId(localStorage.getItem("DriverName") +"-"+ localStorage.getItem("mobilenumber"))
@@ -65,7 +45,36 @@ export class LoginPage implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-  ionViewWillEnter() { this.menu.enable(false); }
+   ngOnDestroy() {
+    this.backButtonSubscription.unsubscribe();
+  }
+  ionViewWillEnter() { this.menu.enable(false);
+    this.backButtonSubscription = this.platform.backButton.subscribeWithPriority(9999,async () => {
+      this.router.navigate(['/login']);
+      // Catches the active view
+      const activeView = this.router.url;  
+      const urlParts = activeView.split('/');              
+      // Checks if can go back before show up the alert
+      if(urlParts.includes('login')) {        
+              const alert = await  this.alertController.create({
+                  header: 'Goeasy Alert',
+                  message: 'Are you sure want to close this app?',
+                  buttons: [{
+                      text: 'No',
+                      role: 'cancel',
+                      handler: () => {                       
+                      }
+                  },{
+                      text: 'Yes',
+                      handler: () => {                        
+                        navigator['app'].exitApp();
+                      }
+                  }]
+              });
+              return await alert.present();
+          }
+    });
+   }
   ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);

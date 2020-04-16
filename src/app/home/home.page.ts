@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController,ToastController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { formatDate } from '@angular/common';
 import { Globals } from '../globals';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CodePush, InstallMode, SyncStatus } from '@ionic-native/code-push/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -20,6 +21,7 @@ export class HomePage {
   tripdate: any = formatDate(new Date(), 'dd-MMM-yyyy', 'en-US', '+0530');;
   shownotrip = false;
   showtrips = true;
+  backButtonSubscription:any;
   constructor(
     private router: Router,
     private platform: Platform,
@@ -28,20 +30,33 @@ export class HomePage {
     private homeservice: RestApiService,
     public globals: Globals,
     private ga: GoogleAnalytics,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    public toastController: ToastController,    
+    private codePush: CodePush,
   ) { }
   ngOnInit() {
+    
     this.ga.trackView('Home Page').then(() => { }).catch(e => console.log(e));
     if (localStorage.getItem('mobilenumber') != "" && localStorage.getItem('DriverInternalID') != "") {
       this.globals.displayname = localStorage.getItem('DriverName');
       this.globals.mobilenumber = localStorage.getItem('mobilenumber')
     }
-    this.platform.backButton.subscribeWithPriority(9999, () => {
-      document.addEventListener('backbutton', function (event) {
+   
+   /*  this.platform.backButton.subscribeWithPriority(9999, () => {
+      this.platform.exitApp();
+     /*  document.addEventListener('backbutton', function (event) {
         event.preventDefault();
         event.stopPropagation();
+        this.dismiss()
         console.log('back button disabled');
-      }, false);
+      }, false); 
+    }); */
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {     
+      localStorage.setItem("GeoLat",(data.coords.latitude).toString());
+      localStorage.setItem("GeoLang",(data.coords.longitude).toString());
+     // data.coords.latitude
+     // data.coords.longitude
     });
     this.geolocation.getCurrentPosition().then((resp) => {
      // console.log(resp.coords.latitude)
@@ -50,6 +65,9 @@ export class HomePage {
      }).catch((error) => {
        console.log('Error getting location', error);
      });
+  }
+  ngOnDestroy() {
+    this.backButtonSubscription.unsubscribe();
   }
   doRefresh(event) {
     this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
@@ -78,6 +96,51 @@ export class HomePage {
 
   }
   ionViewWillEnter() {
+    this.codePush.sync().subscribe((status)=>{     
+      if(status==SyncStatus.DOWNLOADING_PACKAGE)
+      {
+        this.router.navigate(['/update']);
+        localStorage.setItem("updatemsg","Downloading Package");
+      }    
+      if(status==SyncStatus.IN_PROGRESS)
+      {       
+        localStorage.setItem("updatemsg","Please wait..<br>App is updating");
+      }     
+      if(status==SyncStatus.INSTALLING_UPDATE)
+      {  
+        localStorage.setItem("updatemsg","Installing update");
+      }    
+      if(status==SyncStatus.UPDATE_INSTALLED)
+      localStorage.setItem("updatemsg","Update Installed");
+     
+      if(status==SyncStatus.ERROR)
+      localStorage.setItem("updatemsg","Error While Updating");
+     
+    });
+    this.backButtonSubscription = this.platform.backButton.subscribeWithPriority(9999,async () => {
+      // Catches the active view
+      const activeView = this.router.url;  
+      const urlParts = activeView.split('/');              
+      // Checks if can go back before show up the alert
+      if(urlParts.includes('home')) {        
+              const alert = await  this.alertController.create({
+                  header: 'Goeasy Alert',
+                  message: 'Are you sure want to close this app?',
+                  buttons: [{
+                      text: 'No',
+                      role: 'cancel',
+                      handler: () => {                       
+                      }
+                  },{
+                      text: 'Yes',
+                      handler: () => {                        
+                        navigator['app'].exitApp();
+                      }
+                  }]
+              });
+              return await alert.present();
+          }
+    });
     this.presentLoading();
     this.homeservice.getTripList(localStorage.getItem('mobilenumber'), localStorage.getItem('DriverInternalID'), localStorage.getItem('RegularDriver')).subscribe(res => {
       setTimeout(() => {
@@ -89,6 +152,27 @@ export class HomePage {
         this.listoftrips = res.results;
         this.shownotrip = false;
         this.showtrips = true;
+        if (localStorage.getItem('CurrentRouteNumber') != "" && localStorage.getItem('CurrentLogInOut') != "") {
+        for (let i = 0; i < this.listoftrips.length; i++) {
+          if(this.listoftrips[i].RouteNumber==localStorage.getItem("CurrentRouteNumber") && 
+          this.listoftrips[i].LogInOut==localStorage.getItem("CurrentLogInOut"))
+          {
+            console.log("CurrentRouteNumber-->"+localStorage.getItem("CurrentRouteNumber"))
+             if(this.listoftrips[i].TripStatus == 1)
+             {
+              console.log("TripStatus-->"+this.listoftrips[i].TripStatus)
+              clearInterval(this.globals.geowatcher);
+              this.globals.geowatcher = setInterval(() => {
+                this.UpdateGeoLatLang();
+            }, 30000);
+             }
+             else{
+               clearInterval(this.globals.geowatcher);
+               localStorage.setItem("CurrentRouteNumber","");
+               localStorage.setItem('CurrentLogInOut',"");
+             }
+          }
+        }}
       }
       else {
         this.shownotrip = true;
@@ -114,7 +198,25 @@ export class HomePage {
     localStorage.setItem("TripStatus", item.TripStatus);
     localStorage.setItem("TripDate", item.TripDate);
     localStorage.setItem("TripStart", item.TripStart);
+    localStorage.setItem("TripCode", item.TripCode);
     this.router.navigate(['/detail']);
+  }
+  UpdateGeoLatLang()
+  {
+    this.homeservice.updateGeoLatLang(localStorage.getItem('LocationName'),localStorage.getItem('CurrentRouteNumber'),localStorage.getItem('TripDate'),
+    localStorage.getItem('CurrentLogInOut'),localStorage.getItem('GeoLat'),localStorage.getItem('GeoLang')).subscribe(res => {     
+      console.log(res)
+        this.loading.dismiss();    
+      if (res.results != "") {
+       this.presentToast(res.results);        
+      }         
+    }, err => {
+      console.log(err);
+      setTimeout(() => {
+        this.loading.dismiss();
+    }, 2000);
+      this.presentAlert(err);
+    });
   }
   getrowColor(code: any) {
    // console.log(code + "status for color assign")
@@ -155,5 +257,14 @@ export class HomePage {
     });
 
     await alert.present();
+  }
+  async presentToast(toastmessage: string) {
+    const toast = await this.toastController.create({
+      message: toastmessage,
+      duration:5000,
+      position:"middle",
+      cssClass:"messagealert"
+    });
+    toast.present();
   }
 }

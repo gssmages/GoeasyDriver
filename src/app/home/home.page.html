@@ -6,9 +6,10 @@
     <ion-title>
       Home
     </ion-title>
+    <p class="versionno">{{this.globals.appversion}}</p>
   </ion-toolbar>
   <ion-toolbar text-center color="secondary" style="--min-height:30px;">
-      <ion-title style="color: #fff; font-size:16px;--min-height:30px;">Date : {{tripdate}}</ion-title>
+      <ion-title style="color: #fff; font-size:16px;--min-height:30px;">Date : {{tripdate}} ( {{this.globals.mobilenumber}} )</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -34,7 +35,10 @@
        <ion-card  style="background: #005486; text-align: center; color: #fff;">
         <img src="assets/navigator.png" style="width:100px;margin: auto; margin-top:30px;">
         <h3>No Trip Today</h3>
+        <p>Pull down to refresh</p>
+        <p><ion-icon name="arrow-dropdown-circle" style="font-size:24px;"></ion-icon></p>
        </ion-card>
+       
       </div>
         <!--  <ion-card (click)="detailview()">   
             <ion-row style="background: #ffa3a3;">

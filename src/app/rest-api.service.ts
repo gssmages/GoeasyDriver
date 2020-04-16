@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
-
-const SITserver="http://hkdnte250.asia.ad.flextronics.com:1227/";
+//const SITserver="http://gssnte811.asia.ad.flextronics.com:4042/";
+//const SITserver="http://hkdnte250.asia.ad.flextronics.com:1227/";
 const testserver="https://testmobile.flextronics.com/goeasyapi";
 const prodserver="https://mobileservice.flex.com/goeasydriver";
-const localserver="http://localhost:57855";
+const SITserver="http://localhost:57855";
 /****   Goeasy SIT Server ***********/
-/* const LoginURL=SITserver+"/api/DriverMobileApi/RequestOTP?";
-const LoginValidURL=SITserver+"/api/DriverMobileApi/ValidateOTP?";
-const HomeURL=SITserver+"/api/DriverMobileApi/GetHomepage?";
-const DetailpageURL=SITserver+"/api/DriverMobileApi/GetTripSheet?";
-const ScanURL=SITserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
-const AreaURL=SITserver+"/api/DriverMobileApi/AreaNodalPoint?";
-const TripcloseURL=SITserver+"/api/DriverMobileApi/Tripclose?"; 
-const TripstartURL=SITserver+"/api/DriverMobileApi/DriverTripStart?"; */
+/* const LoginURL=testserver+"/api/DriverMobileApi/RequestOTP?";
+const LoginValidURL=testserver+"/api/DriverMobileApi/ValidateOTP?";
+const HomeURL=testserver+"/api/DriverMobileApi/GetHomepage?";
+const DetailpageURL=testserver+"/api/DriverMobileApi/GetTripSheet?";
+const ScanURL=testserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
+const AreaURL=testserver+"/api/DriverMobileApi/AreaNodalPoint?";
+const TripcloseURL=testserver+"/api/DriverMobileApi/Tripclose?"; 
+const TripstartURL=testserver+"/api/DriverMobileApi/DriverTripStart?";
+const GeoLocationUpdateURL=testserver+"/api/DriverMobileApi/UpdateLatLong?"; */
 /******For Development tesing ******/
 //const AreaURL="http://gssnte811.asia.ad.flextronics.com:4042/api/AdhocCabRequestApi/ReadAdhocCabRequestValues/?locationID=1&employeeID=941364";
 //const DetailpageURL="./assets/API/TripDetails.json";
@@ -31,6 +32,7 @@ const ScanURL=prodserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
 const AreaURL=prodserver+"/api/DriverMobileApi/AreaNodalPoint?";
 const TripcloseURL=prodserver+"/api/DriverMobileApi/Tripclose?";
 const TripstartURL=prodserver+"/api/DriverMobileApi/DriverTripStart?"; 
+const GeoLocationUpdateURL=prodserver+"/api/DriverMobileApi/UpdateLatLong?";
 @Injectable({
   providedIn: 'root',
 })
@@ -121,6 +123,15 @@ export class RestApiService {
     .set('GeoLang', geolang);
   return this.http.get(TripstartURL,{params}).pipe(catchError(this.handleError));
   }
-
+  updateGeoLatLang(locationname: string,routenumber: string, traveldate: string,shiftTime: string,geolat: string,geolang: string): Observable<any>{
+    let params = new HttpParams()
+    .set('location', locationname)
+    .set('routeNo', routenumber)
+    .set('travelDate', traveldate)
+    .set('shiftTime', shiftTime)
+    .set('GeoLat', geolat)
+    .set('GeoLang', geolang);
+  return this.http.get(GeoLocationUpdateURL,{params}).pipe(catchError(this.handleError));
+  }
   
 }

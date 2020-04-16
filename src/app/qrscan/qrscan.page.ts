@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Globals } from '../globals';
-import { AlertController } from '@ionic/angular';
+import { AlertController,Platform } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { Router } from '@angular/router';
@@ -39,9 +39,17 @@ export class QrscanPage implements OnInit {
     public loadingController: LoadingController,
     private qrscanservice: RestApiService,
     private router: Router,
-    public modalController: ModalController,public toastController: ToastController,private ga: GoogleAnalytics,private geolocation: Geolocation) { }
+    public modalController: ModalController,
+    public toastController: ToastController,
+    private ga: GoogleAnalytics,
+    private geolocation: Geolocation,
+    private platform: Platform) { }
 
   ngOnInit() {
+    this.platform.backButton.subscribe(async () => {
+      // Catches the active view
+      this.router.navigate(['/detail']);
+    });
     this.ga.trackView('QRScan Page').then(() => {}).catch(e => console.log(e));
     //console.log(this.globals.Tripsheetdetail)
     this.employeedetail = this.globals.Tripsheetdetail;
