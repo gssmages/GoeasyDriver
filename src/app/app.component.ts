@@ -48,7 +48,7 @@ export class AppComponent {
     private ga: GoogleAnalytics,
   ) {
     this.initializeApp();
-    this.globals.appversion="1.0.1"; //Manual app versioon changes 
+    this.globals.appversion="1.0.2"; //Manual app versioon changes 
   }
 
   initializeApp() {
