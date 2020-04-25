@@ -152,7 +152,8 @@ export class HomePage {
         this.listoftrips = res.results;
         this.shownotrip = false;
         this.showtrips = true;
-        if (localStorage.getItem('CurrentRouteNumber') != "" && localStorage.getItem('CurrentLogInOut') != "") {
+        //this.UpdateGeoLatLang();
+     /*    if (localStorage.getItem('CurrentRouteNumber') != "" && localStorage.getItem('CurrentLogInOut') != "") {
         for (let i = 0; i < this.listoftrips.length; i++) {
           if(this.listoftrips[i].RouteNumber==localStorage.getItem("CurrentRouteNumber") && 
           this.listoftrips[i].LogInOut==localStorage.getItem("CurrentLogInOut"))
@@ -172,7 +173,8 @@ export class HomePage {
                localStorage.setItem('CurrentLogInOut',"");
              }
           }
-        }}
+        }
+      } */
       }
       else {
         this.shownotrip = true;

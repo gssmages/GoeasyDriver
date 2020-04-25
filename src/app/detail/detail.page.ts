@@ -155,9 +155,9 @@ export class DetailPage implements OnInit {
         this.router.navigate(['/home']);
         localStorage.setItem("CurrentRouteNumber", localStorage.getItem('RouteNumber'));
         localStorage.setItem('CurrentLogInOut',localStorage.getItem('LogInOut'))
-      this.globals.geowatcher = setInterval(() => {
+   /*    this.globals.geowatcher = setInterval(() => {
           this.UpdateGeoLatLang();
-      }, 30000);
+      }, 30000); */
        }    
       }         
     }, err => {

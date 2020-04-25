@@ -8,15 +8,15 @@ const testserver="https://testmobile.flextronics.com/goeasyapi";
 const prodserver="https://mobileservice.flex.com/goeasydriver";
 const SITserver="http://localhost:57855";
 /****   Goeasy SIT Server ***********/
-/* const LoginURL=testserver+"/api/DriverMobileApi/RequestOTP?";
-const LoginValidURL=testserver+"/api/DriverMobileApi/ValidateOTP?";
-const HomeURL=testserver+"/api/DriverMobileApi/GetHomepage?";
-const DetailpageURL=testserver+"/api/DriverMobileApi/GetTripSheet?";
-const ScanURL=testserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
-const AreaURL=testserver+"/api/DriverMobileApi/AreaNodalPoint?";
-const TripcloseURL=testserver+"/api/DriverMobileApi/Tripclose?"; 
-const TripstartURL=testserver+"/api/DriverMobileApi/DriverTripStart?";
-const GeoLocationUpdateURL=testserver+"/api/DriverMobileApi/UpdateLatLong?"; */
+/* const LoginURL=SITserver+"/api/DriverMobileApi/RequestOTP?";
+const LoginValidURL=SITserver+"/api/DriverMobileApi/ValidateOTP?";
+const HomeURL=SITserver+"/api/DriverMobileApi/GetHomepage?";
+const DetailpageURL=SITserver+"/api/DriverMobileApi/GetTripSheet?";
+const ScanURL=SITserver+"/api/DriverMobileApi/EmployeeCheckInCheckOut?";
+const AreaURL=SITserver+"/api/DriverMobileApi/AreaNodalPoint?";
+const TripcloseURL=SITserver+"/api/DriverMobileApi/Tripclose?"; 
+const TripstartURL=SITserver+"/api/DriverMobileApi/DriverTripStart?";
+const GeoLocationUpdateURL=SITserver+"/api/DriverMobileApi/UpdateLatLong?"; */
 /******For Development tesing ******/
 //const AreaURL="http://gssnte811.asia.ad.flextronics.com:4042/api/AdhocCabRequestApi/ReadAdhocCabRequestValues/?locationID=1&employeeID=941364";
 //const DetailpageURL="./assets/API/TripDetails.json";
