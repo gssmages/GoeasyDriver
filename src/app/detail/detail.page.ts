@@ -154,7 +154,8 @@ export class DetailPage implements OnInit {
         localStorage.setItem("TripStart", "1");
         this.router.navigate(['/home']);
         localStorage.setItem("CurrentRouteNumber", localStorage.getItem('RouteNumber'));
-        localStorage.setItem('CurrentLogInOut',localStorage.getItem('LogInOut'))
+        localStorage.setItem('CurrentLogInOut',localStorage.getItem('LogInOut'));
+        localStorage.setItem('CurrentRouteID',localStorage.getItem('RouteID'));
    /*    this.globals.geowatcher = setInterval(() => {
           this.UpdateGeoLatLang();
       }, 30000); */
@@ -190,7 +191,7 @@ export class DetailPage implements OnInit {
  UpdateGeoLatLang()
   {
     this.tripdetailservice.updateGeoLatLang(localStorage.getItem('LocationName'),localStorage.getItem('CurrentRouteNumber'),localStorage.getItem('TripDate'),
-    localStorage.getItem('CurrentLogInOut'),localStorage.getItem('GeoLat'),localStorage.getItem('GeoLang')).subscribe(res => {     
+    localStorage.getItem('CurrentLogInOut'),localStorage.getItem('GeoLat'),localStorage.getItem('GeoLang'),localStorage.getItem('CurrentRouteID')).subscribe(res => {     
       console.log(res)
         this.loading.dismiss();    
       if (res.results != "") {

@@ -206,7 +206,7 @@ export class HomePage {
   UpdateGeoLatLang()
   {
     this.homeservice.updateGeoLatLang(localStorage.getItem('LocationName'),localStorage.getItem('CurrentRouteNumber'),localStorage.getItem('TripDate'),
-    localStorage.getItem('CurrentLogInOut'),localStorage.getItem('GeoLat'),localStorage.getItem('GeoLang')).subscribe(res => {     
+    localStorage.getItem('CurrentLogInOut'),localStorage.getItem('GeoLat'),localStorage.getItem('GeoLang'),localStorage.getItem('CurrentRouteID')).subscribe(res => {     
       console.log(res)
         this.loading.dismiss();    
       if (res.results != "") {
